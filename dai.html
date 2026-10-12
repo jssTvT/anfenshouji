@@ -363,7 +363,7 @@
     // 优先查 chatData，没有则用映射表和默认消息
     const data = chatData[name] || {
       avatar: avatarMap[name] || myAvatarUrl, // 去映射表找头像，找不到就用你自己的
-      messages: [{ type: 'right', text: '你好！' }] // 默认你自己发起对话
+      messages: [{ type: 'left', text: '我通过了你的朋友验证请求，现在我们可以开始聊天了！' }] // 默认你自己发起对话
     };
 
     data.messages.forEach(msg => {
