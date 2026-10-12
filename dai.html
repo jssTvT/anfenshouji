@@ -139,6 +139,36 @@
   .moment-images img { width: 100%; height: 100px; object-fit: cover; border-radius: 4px; }
   .moment-footer { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #888; }
   .moment-like-btn { cursor: pointer; color: #576b95; }
+   /* 朋友圈互动区（纯静态展示） */
+  .moments-interaction {
+    background: #f7f7f7;
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-top: 8px;
+    font-size: 13px;
+    position: relative;
+  }
+  /* 小三角指向原动态 */
+  .moments-interaction::before {
+    content: "";
+    position: absolute;
+    top: -6px; left: 15px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #f7f7f7;
+  }
+  
+  /* 点赞区 */
+  .like-list { color: #576b95; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 6px; }
+  .like-list .icon { color: #576b95; margin-right: 4px; font-size: 14px; }
+  .like-list .name { color: #576b95; font-weight: 600; }
+  
+  /* 评论区 */
+  .comment-list { border-top: 1px solid #e5e5e5; padding-top: 6px; }
+  .comment-item { margin-bottom: 4px; line-height: 1.4; }
+  .comment-item:last-child { margin-bottom: 0; }
+  .comment-item .name { color: #576b95; font-weight: 600; }
+  .comment-item .content { color: #333; }
 </style>
 </head>
 <body>
@@ -331,28 +361,76 @@
         <div class="user-info"><span>戴</span><img src="images/dai.png" alt="戴"></div>
       </div>
       <div class="moments-body">
+        
+        <!-- 第一条动态 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="images/zhangjia.jpg" alt="张佳乐"></div>
           <div class="moment-content">
             <div class="moment-name">张佳乐</div>
             <div class="moment-text">今天的排练很顺利，晚上吃顿好的！🍜</div>
-            <div class="moment-images"><img src="https://picsum.photos/200/200?random=1" alt=""><img src="https://picsum.photos/200/200?random=2" alt=""><img src="https://picsum.photos/200/200?random=3" alt=""></div>
-            <div class="moment-footer"><span>刚刚</span><span class="moment-like-btn">❤️ 赞</span></div>
+            <div class="moment-images">
+              <img src="images/hanyuyan.png" alt="">
+              <img src="images/chuyunxiu.png" alt="">
+              <img src="images/fsq.png" alt="">
+            </div>
+            <div class="moment-footer">
+              <span>刚刚</span>
+              <span style="color:#576b95;">❤️ 赞</span>
+            </div>
+            
+            <!-- 静态互动区 -->
+            <div class="moments-interaction">
+              <!-- 点赞列表 -->
+              <div class="like-list">
+                <span class="icon">❤️</span>
+                <span class="name">楚姐</span>、
+                <span class="name">孙翔</span>、
+                <span class="name">我有早</span>
+              </div>
+              <!-- 评论列表 -->
+              <div class="comment-list">
+                <div class="comment-item">
+                  <span class="name">楚姐</span><span class="content">：好耶！等你的饭！</span>
+                </div>
+                <div class="comment-item">
+                  <span class="name">张佳乐</span><span class="content">回复 楚姐：没问题！</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- 第二条动态 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="images/chuyunxiu.png" alt="楚姐"></div>
           <div class="moment-content">
             <div class="moment-name">楚姐</div>
             <div class="moment-text">新买的相机到货了，试拍了几张！📸</div>
-            <div class="moment-images"><img src="https://picsum.photos/200/200?random=4" alt=""><img src="https://picsum.photos/200/200?random=5" alt=""></div>
-            <div class="moment-footer"><span>昨天</span><span class="moment-like-btn">❤️ 赞</span></div>
+            <div class="moment-images">
+              <img src="images/yuanboqing.png" alt="">
+              <img src="images/dzdp.jpg" alt="">
+            </div>
+            <div class="moment-footer">
+              <span>昨天</span>
+              <span style="color:#576b95;">❤️ 赞</span>
+            </div>
+
+            <!-- 静态互动区 -->
+            <div class="moments-interaction">
+              <div class="like-list">
+                <span class="icon">❤️</span>
+                <span class="name">张佳乐</span>
+              </div>
+              <div class="comment-list">
+                <div class="comment-item">
+                  <span class="name">孙翔</span><span class="content">：拍得不错啊！</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
-    </div>
-  </div>
-</div>
 
 <script>
    function switchTab(tabId, title) {
