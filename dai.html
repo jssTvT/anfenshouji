@@ -313,7 +313,7 @@
 </div>
 
 <script>
-  function switchTab(tabId, title) {
+   function switchTab(tabId, title) {
     document.querySelectorAll('.tab-view').forEach(tab => tab.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
     document.getElementById('mainHeader').innerText = title;
@@ -322,87 +322,64 @@
     closeChat();
     closeMoments();
   }
-   // 你自己的头像（右侧气泡）
-  const myAvatarUrl = 'images/dai.png'; 
 
-// 你自己的头像（右侧气泡）
-const myAvatarUrl = 'images/dai.png';
+  // 你自己的头像
+  const myAvatarUrl = 'images/dai.png';
 
-// 👇 加在这里！头像映射表 👇
-const avatarMap = {
-  '楚姐': 'images/chuyunxiu.png',
-  '张佳乐': 'images/mucheng.png',
-  '孙翔': 'images/sunx.jpg', // 注意这里是 .jpg
-  '方': 'images/fsq.png',
-  '沐橙': 'images/mucheng.png',
-  '戴': 'images/dai.png',
-  // 如果还有其他人，按照上面的格式继续加，名字必须和聊天列表里的名字一模一样！
-};
+  // 头像映射表（注意检查名字和文件后缀）
+  const avatarMap = {
+    '汉语言文学大家庭': 'images/hanyuyan.png',
+    '楚姐': 'images/chuyunxiu.png',
+    '我有早': 'images/jiemeiqun.jpg',
+    '张佳乐': 'images/zhangjia.jpg',
+    '肖时钦': 'images/xiaoshiq.jpg',
+    '孙翔': 'images/sunx.jpg',
+    '机电3赵禹哲': 'images/zhaoyuzhe.png',
+    '橙子': 'images/mucheng.png',
+    '大众点评': 'images/dzdp.jpg',
+    '刘小别': 'images/liuxiaobie.jpg',
+    '唐昊': 'images/tanghao.jpg',
+    '方': 'images/fsq.png'
+  };
 
-// 聊天数据（在这里配置每个人的头像和聊天内容）
-const chatData = {
-  '楚姐': {
-    avatar: 'images/chuyunxiu.png', // 对方的头像
-    // ...
- 
-  // 聊天数据（在这里配置每个人的头像和聊天内容）
+  // 聊天数据（每个人发过的消息，没有配置的会走默认逻辑）
   const chatData = {
     '楚姐': {
-      avatar: 'images/chuyunxiu.png', // 对方的头像
+      avatar: 'images/chuyunxiu.png',
       messages: [
         { type: 'left', text: '你选课没？' },
         { type: 'right', text: '还没，我还在纠结。' },
         { type: 'left', text: '快点选，晚了就没好课了！' }
       ]
-    },
-    '张佳乐': {
-      avatar: 'images/mucheng.png', // 假设张佳乐用沐橙的头像，你可以换成其他图片
-      messages: [
-        { type: 'left', text: '祖宗啊你别睡了' },
-        { type: 'right', text: '再睡五分钟...' },
-        { type: 'left', text: '迟到了我可不管！' }
-      ]
-    },
-    '孙翔': {
-      avatar: 'images/sunx.jpg',
-      messages: [
-        { type: 'left', text: '醒醒' },
-        { type: 'right', text: '干嘛啊大早上' }
-      ]
     }
   };
 
-  // 打开聊天详情（带头像动态生成）
+  // 打开聊天详情
   function openChat(name) {
     document.getElementById('chatTitle').innerText = name;
     const msgArea = document.getElementById('msgArea');
-    msgArea.innerHTML = ''; // 清空旧记录
+    msgArea.innerHTML = '';
 
-    // 如果有这个人的聊天数据就加载，没有就给默认提示
+    // 优先查 chatData，没有则用映射表和默认消息
     const data = chatData[name] || {
-  avatar: avatarMap[name] || 'images/dai.png', // 从映射表里找，找不到就用戴的头像
-  messages: [{ type: 'left', text: '我通过了你的朋友验证请求，现在我们可以开始聊天了！' }]
-    }
+      avatar: avatarMap[name] || myAvatarUrl, // 去映射表找头像，找不到就用你自己的
+      messages: [{ type: 'right', text: '你好！' }] // 默认你自己发起对话
+    };
 
     data.messages.forEach(msg => {
-      // 1. 创建整行容器
       const rowDiv = document.createElement('div');
       rowDiv.className = `msg-row ${msg.type}`;
 
-      // 2. 创建头像框
       const avatarDiv = document.createElement('div');
       avatarDiv.className = 'msg-avatar';
       const img = document.createElement('img');
-      // 根据是对方还是自己，选择对应的头像
-      img.src = msg.type === 'left' ? data.avatar : myAvatarUrl; 
+      img.src = msg.type === 'left' ? data.avatar : myAvatarUrl;
       avatarDiv.appendChild(img);
 
-      // 3. 创建气泡
       const bubbleDiv = document.createElement('div');
       bubbleDiv.className = `msg ${msg.type}`;
       bubbleDiv.innerText = msg.text;
 
-      // 4. 组装：左边消息是 (头像 -> 气泡)，右边消息是 (气泡 -> 头像)
       if (msg.type === 'left') {
         rowDiv.appendChild(avatarDiv);
         rowDiv.appendChild(bubbleDiv);
@@ -410,14 +387,13 @@ const chatData = {
         rowDiv.appendChild(bubbleDiv);
         rowDiv.appendChild(avatarDiv);
       }
-
       msgArea.appendChild(rowDiv);
     });
 
-    // 显示聊天界面，并滚动到底部
     document.getElementById('chatDetail').classList.add('active');
     msgArea.scrollTop = msgArea.scrollHeight;
   }
+
   function closeChat() { document.getElementById('chatDetail').classList.remove('active'); }
   function openMoments() { document.getElementById('momentsView').classList.add('active'); }
   function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
