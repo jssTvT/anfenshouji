@@ -8,44 +8,40 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
   body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
 
-  /* 手机外壳 */
   .phone { width: 375px; height: 812px; background: #ededed; border-radius: 45px; border: 10px solid #2c2c2e; position: relative; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.9); }
   .notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 140px; height: 30px; background: #000; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; z-index: 1000; }
   .status-bar { position: absolute; top: 0; left: 0; width: 100%; padding: 15px 25px; display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: #000; z-index: 999; }
 
-  /* 微信 App 容器 */
   .wechat-app { width: 100%; height: 100%; display: flex; flex-direction: column; position: absolute; top: 0; left: 0; }
 
-  /* 顶部导航栏 */
   .nav-header { padding: 50px 15px 15px; background: #ededed; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 17px; position: relative; }
   .nav-header .back-btn { position: absolute; left: 15px; bottom: 15px; cursor: pointer; color: #000; font-size: 16px; display: flex; align-items: center; }
   .nav-header .back-btn::before { content: "‹"; font-size: 28px; margin-right: 2px; line-height: 1; }
-  .nav-header .right-btn { position: absolute; right: 15px; bottom: 15px; cursor: pointer; color: #000; font-size: 18px; }
 
-  /* 主视图区域 */
   .main-content { flex: 1; overflow-y: auto; position: relative; }
   .tab-view { display: none; height: 100%; overflow-y: auto; padding-bottom: 60px; }
   .tab-view.active { display: block; }
 
   /* 消息列表项 */
-  .chat-item { display: flex; align-items: center; padding: 12px 15px; background: #ededed; border-bottom: 1px solid #e0e0e0; cursor: pointer; }
+  .chat-item { display: flex; align-items: center; padding: 12px 15px; background: #ededed; border-bottom: 1px solid #e0e0e0; cursor: pointer; transition: background 0.2s; }
   .chat-item:active { background: #ddd; }
+  
+  /* 置顶聊天项：加深背景色 */
+  .chat-item.pinned { background: #dcdcdc; }
+
   .chat-avatar { width: 48px; height: 48px; border-radius: 6px; background: #ccc; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 18px; font-weight: bold; flex-shrink: 0; position: relative; }
-  .chat-avatar img { width: 100%; height: 100%; border-radius: 6px; object-fit: cover; }
   .chat-info { flex: 1; overflow: hidden; }
-  .chat-name { font-size: 16px; color: #000; margin-bottom: 4px; font-weight: 500; }
+  .chat-name { font-size: 16px; color: #000; margin-bottom: 4px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
   .chat-msg { color: #888; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .chat-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
   .chat-time { font-size: 12px; color: #aaa; }
   .chat-badge { background: #ff3b30; color: #fff; font-size: 11px; min-width: 18px; height: 18px; border-radius: 9px; display: flex; justify-content: center; align-items: center; padding: 0 4px; }
-  .chat-mute { font-size: 14px; color: #ccc; }
+  .chat-mute { font-size: 14px; color: #b3b3b3; }
   .red-dot { width: 8px; height: 8px; background: #ff3b30; border-radius: 50%; margin-top: 4px; }
 
-  /* 通讯录列表项 */
+  /* 通讯录/发现/我的列表 */
   .contact-item { display: flex; align-items: center; padding: 15px; background: #fff; border-bottom: 1px solid #f0f0f0; }
   .contact-avatar { width: 40px; height: 40px; border-radius: 4px; background: #07c160; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; font-size: 16px; }
-
-  /* 发现页列表 */
   .discover-item { display: flex; align-items: center; padding: 15px; background: #fff; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
   .discover-item:active { background: #f0f0f0; }
   .discover-icon { width: 30px; height: 30px; margin-right: 12px; display: flex; justify-content: center; align-items: center; font-size: 20px; }
@@ -60,7 +56,7 @@
   .nav-badge { position: absolute; top: 0; right: 10px; background: #ff3b30; color: #fff; font-size: 10px; min-width: 18px; height: 18px; border-radius: 9px; display: flex; justify-content: center; align-items: center; padding: 0 4px; }
   .nav-dot { position: absolute; top: 0; right: 15px; width: 8px; height: 8px; background: #ff3b30; border-radius: 50%; }
 
-  /* 聊天详情页 */
+  /* 聊天详情页 & 朋友圈 */
   .chat-detail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ededed; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; z-index: 200; }
   .chat-detail.active { transform: translateX(0); }
   .msg-area { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
@@ -72,7 +68,6 @@
   .chat-input-area { padding: 10px 15px; background: #f7f7f7; border-top: 1px solid #ddd; }
   .chat-input-area input { width: 100%; padding: 10px 15px; border-radius: 6px; border: 1px solid #ddd; outline: none; font-size: 15px; }
 
-  /* 朋友圈页面 */
   .moments-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; z-index: 300; }
   .moments-view.active { transform: translateX(0); }
   .moments-header { position: relative; height: 250px; background: linear-gradient(135deg, #667eea, #764ba2); }
@@ -99,33 +94,38 @@
   <div class="status-bar"><span>13:33</span><span>📶 🔋</span></div>
 
   <div class="wechat-app">
-    
-    <!-- 顶部导航栏 -->
     <div class="nav-header" id="mainHeader">微信(93)</div>
 
-    <!-- 主内容区 -->
     <div class="main-content">
-      
-      <!-- 标签页 1：微信（消息列表） -->
+      <!-- 标签 1：消息列表 -->
       <div class="tab-view active" id="tab-chats">
-        <!-- 汉语言文学大家庭 -->
-        <div class="chat-item" onclick="openChat('汉语言文学大家庭')">
+        
+        <!-- ⭐ 置顶聊天：汉语言文学大家庭 (加深背景 + 免打扰) -->
+        <div class="chat-item pinned" onclick="openChat('汉语言文学大家庭')">
           <div class="chat-avatar" style="background:#8e44ad;">群</div>
           <div class="chat-info">
             <div class="chat-name">汉语言文学大家庭</div>
             <div class="chat-msg">学委: ‼️大家不要忘记选课啦</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">上午09:42</div></div>
+          <div class="chat-meta">
+            <div class="chat-time">上午09:42</div>
+            <div class="chat-mute">🔕</div>
+          </div>
         </div>
-        <!-- 楚姐 -->
+
+        <!-- 楚姐 (移除免打扰) -->
         <div class="chat-item" onclick="openChat('楚姐')">
           <div class="chat-avatar" style="background:#f39c12;">🐶</div>
           <div class="chat-info">
             <div class="chat-name">楚姐</div>
             <div class="chat-msg">[语音]你选课没？</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">上午09:42</div><div class="chat-badge">5</div><div class="chat-mute">🔕</div></div>
+          <div class="chat-meta">
+            <div class="chat-time">上午09:42</div>
+            <div class="chat-badge">5</div>
+          </div>
         </div>
+
         <!-- 我有早 -->
         <div class="chat-item" onclick="openChat('我有早')">
           <div class="chat-avatar" style="background:#e84393;">早</div>
@@ -133,8 +133,12 @@
             <div class="chat-name">我有早</div>
             <div class="chat-msg">楚姐:服了 那死给</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">下午1:28</div><div class="chat-badge">73</div></div>
+          <div class="chat-meta">
+            <div class="chat-time">下午1:28</div>
+            <div class="chat-badge">73</div>
+          </div>
         </div>
+
         <!-- 张佳乐 -->
         <div class="chat-item" onclick="openChat('张佳乐')">
           <div class="chat-avatar" style="background:#e74c3c;">张</div>
@@ -142,8 +146,12 @@
             <div class="chat-name">张佳乐</div>
             <div class="chat-msg">祖宗啊你别睡了</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">下午1:25</div><div class="chat-badge">3</div></div>
+          <div class="chat-meta">
+            <div class="chat-time">下午1:25</div>
+            <div class="chat-badge">3</div>
+          </div>
         </div>
+
         <!-- 肖时钦 -->
         <div class="chat-item" onclick="openChat('肖时钦')">
           <div class="chat-avatar" style="background:#2c3e50;">肖</div>
@@ -151,35 +159,52 @@
             <div class="chat-name">肖时钦</div>
             <div class="chat-msg">选课</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">下午1:20</div><div class="chat-badge">11</div></div>
+          <div class="chat-meta">
+            <div class="chat-time">下午1:20</div>
+            <div class="chat-badge">11</div>
+          </div>
         </div>
-        <!-- 孙翔 -->
+
+        <!-- 孙翔 (添加免打扰) -->
         <div class="chat-item" onclick="openChat('孙翔')">
           <div class="chat-avatar" style="background:#f1c40f; color:#000;">孙</div>
           <div class="chat-info">
             <div class="chat-name">孙翔</div>
             <div class="chat-msg">[语音]醒醒</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">中午12:24</div><div class="red-dot"></div></div>
+          <div class="chat-meta">
+            <div class="chat-time">中午12:24</div>
+            <div class="red-dot"></div>
+            <div class="chat-mute">🔕</div>
+          </div>
         </div>
-        <!-- 机电3赵禹哲 -->
+
+        <!-- 机电3赵禹哲 (添加免打扰) -->
         <div class="chat-item" onclick="openChat('机电3赵禹哲')">
           <div class="chat-avatar" style="background:#3498db;">赵</div>
           <div class="chat-info">
             <div class="chat-name">机电3赵禹哲</div>
             <div class="chat-msg">你选修课选什么</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">上午11:27</div><div class="chat-mute">🔕</div></div>
+          <div class="chat-meta">
+            <div class="chat-time">上午11:27</div>
+            <div class="chat-mute">🔕</div>
+          </div>
         </div>
-        <!-- 橙子 -->
+
+        <!-- 橙子 (移除免打扰) -->
         <div class="chat-item" onclick="openChat('橙子')">
           <div class="chat-avatar" style="background:#e67e22;">🍊</div>
           <div class="chat-info">
             <div class="chat-name">橙子</div>
             <div class="chat-msg">早上十点选课别忘了~</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">上午10:24</div><div class="chat-badge">1</div><div class="chat-mute">🔕</div></div>
+          <div class="chat-meta">
+            <div class="chat-time">上午10:24</div>
+            <div class="chat-badge">1</div>
+          </div>
         </div>
+
         <!-- 大众点评 -->
         <div class="chat-item" onclick="openChat('大众点评')">
           <div class="chat-avatar" style="background:#e74c3c;">点</div>
@@ -187,11 +212,15 @@
             <div class="chat-name">大众点评</div>
             <div class="chat-msg">[链接]你附近的美食推荐</div>
           </div>
-          <div class="chat-meta"><div class="chat-time">上午09:27</div><div class="chat-mute">🔕</div></div>
+          <div class="chat-meta">
+            <div class="chat-time">上午09:27</div>
+            <div class="chat-mute">🔕</div>
+          </div>
         </div>
+
       </div>
 
-      <!-- 标签页 2：通讯录 -->
+      <!-- 标签 2：通讯录 -->
       <div class="tab-view" id="tab-contacts">
         <div class="contact-item"><div class="contact-avatar">张</div> 张佳乐</div>
         <div class="contact-item"><div class="contact-avatar" style="background:#e74c3c;">楚</div> 楚姐</div>
@@ -200,26 +229,18 @@
         <div class="contact-item"><div class="contact-avatar" style="background:#9b59b6;">赵</div> 赵禹哲</div>
       </div>
 
-      <!-- 标签页 3：发现 -->
+      <!-- 标签 3：发现 -->
       <div class="tab-view" id="tab-discover">
         <div class="discover-item" onclick="openMoments()">
           <div class="discover-icon">📷</div>
           <div class="discover-text">朋友圈</div>
           <div class="discover-arrow">›</div>
         </div>
-        <div class="discover-item">
-          <div class="discover-icon">📺</div>
-          <div class="discover-text">视频号</div>
-          <div class="discover-arrow">›</div>
-        </div>
-        <div class="discover-item">
-          <div class="discover-icon">🔍</div>
-          <div class="discover-text">扫一扫</div>
-          <div class="discover-arrow">›</div>
-        </div>
+        <div class="discover-item"><div class="discover-icon">📺</div><div class="discover-text">视频号</div><div class="discover-arrow">›</div></div>
+        <div class="discover-item"><div class="discover-icon">🔍</div><div class="discover-text">扫一扫</div><div class="discover-arrow">›</div></div>
       </div>
 
-      <!-- 标签页 4：我（个人主页） -->
+      <!-- 标签 4：我 -->
       <div class="tab-view" id="tab-me">
         <div style="padding: 30px; text-align: center; background: #fff;">
           <div style="width: 70px; height: 70px; border-radius: 8px; background: #07c160; margin: 0 auto 10px; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 28px; font-weight: bold;">戴</div>
@@ -230,38 +251,20 @@
         <div class="discover-item"><div class="discover-icon">🖼️</div><div class="discover-text">相册</div><div class="discover-arrow">›</div></div>
         <div class="discover-item"><div class="discover-icon">⚙️</div><div class="discover-text">设置</div><div class="discover-arrow">›</div></div>
       </div>
-
     </div>
 
-    <!-- 底部导航栏 -->
+    <!-- 底部导航 -->
     <div class="bottom-nav">
-      <div class="nav-item active" onclick="switchTab('tab-chats', '微信(93)')">
-        <span class="nav-icon">💬</span>微信
-        <div class="nav-badge">93</div>
-      </div>
-      <div class="nav-item" onclick="switchTab('tab-contacts', '通讯录')">
-        <span class="nav-icon">👥</span>通讯录
-        <div class="nav-badge">3</div>
-      </div>
-      <div class="nav-item" onclick="switchTab('tab-discover', '发现')">
-        <span class="nav-icon">🧭</span>发现
-        <div class="nav-dot"></div>
-      </div>
-      <div class="nav-item" onclick="switchTab('tab-me', '我')">
-        <span class="nav-icon">👤</span>我
-      </div>
+      <div class="nav-item active" onclick="switchTab('tab-chats', '微信(93)')"><span class="nav-icon">💬</span>微信<div class="nav-badge">93</div></div>
+      <div class="nav-item" onclick="switchTab('tab-contacts', '通讯录')"><span class="nav-icon">👥</span>通讯录<div class="nav-badge">3</div></div>
+      <div class="nav-item" onclick="switchTab('tab-discover', '发现')"><span class="nav-icon">🧭</span>发现<div class="nav-dot"></div></div>
+      <div class="nav-item" onclick="switchTab('tab-me', '我')"><span class="nav-icon">👤</span>我</div>
     </div>
 
     <!-- 聊天详情页 -->
     <div class="chat-detail" id="chatDetail">
-      <div class="nav-header">
-        <div class="back-btn" onclick="closeChat()">返回</div>
-        <span id="chatTitle">聊天</span>
-      </div>
-      <div class="msg-area" id="msgArea">
-        <div class="msg left">这是“戴”的聊天记录测试页面。</div>
-        <div class="msg right">你可以在这里填你自己写的对话。</div>
-      </div>
+      <div class="nav-header"><div class="back-btn" onclick="closeChat()">返回</div><span id="chatTitle">聊天</span></div>
+      <div class="msg-area" id="msgArea"><div class="msg left">这是“戴”的聊天记录测试页面。</div><div class="msg right">你可以在这里填你自己写的对话。</div></div>
       <div class="chat-input-area"><input type="text" placeholder="输入消息..."></div>
     </div>
 
@@ -269,10 +272,7 @@
     <div class="moments-view" id="momentsView">
       <div class="moments-header">
         <div class="back-btn" onclick="closeMoments()">返回</div>
-        <div class="user-info">
-          <span>戴</span>
-          <img src="https://picsum.photos/100/100?random=99" alt="头像">
-        </div>
+        <div class="user-info"><span>戴</span><img src="https://picsum.photos/100/100?random=99" alt="头像"></div>
       </div>
       <div class="moments-body">
         <div class="moment-item">
@@ -280,11 +280,7 @@
           <div class="moment-content">
             <div class="moment-name">张佳乐</div>
             <div class="moment-text">今天的排练很顺利，晚上吃顿好的！🍜</div>
-            <div class="moment-images">
-              <img src="https://picsum.photos/200/200?random=1" alt="">
-              <img src="https://picsum.photos/200/200?random=2" alt="">
-              <img src="https://picsum.photos/200/200?random=3" alt="">
-            </div>
+            <div class="moment-images"><img src="https://picsum.photos/200/200?random=1" alt=""><img src="https://picsum.photos/200/200?random=2" alt=""><img src="https://picsum.photos/200/200?random=3" alt=""></div>
             <div class="moment-footer"><span>刚刚</span><span class="moment-like-btn">❤️ 赞</span></div>
           </div>
         </div>
@@ -293,21 +289,16 @@
           <div class="moment-content">
             <div class="moment-name">楚姐</div>
             <div class="moment-text">新买的相机到货了，试拍了几张！📸</div>
-            <div class="moment-images">
-              <img src="https://picsum.photos/200/200?random=4" alt="">
-              <img src="https://picsum.photos/200/200?random=5" alt="">
-            </div>
+            <div class="moment-images"><img src="https://picsum.photos/200/200?random=4" alt=""><img src="https://picsum.photos/200/200?random=5" alt=""></div>
             <div class="moment-footer"><span>昨天</span><span class="moment-like-btn">❤️ 赞</span></div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
 <script>
-  // 切换底部标签页
   function switchTab(tabId, title) {
     document.querySelectorAll('.tab-view').forEach(tab => tab.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
@@ -317,27 +308,13 @@
     closeChat();
     closeMoments();
   }
-
-  // 打开聊天详情
   function openChat(name) {
     document.getElementById('chatTitle').innerText = name;
     document.getElementById('chatDetail').classList.add('active');
   }
-
-  // 关闭聊天详情
-  function closeChat() {
-    document.getElementById('chatDetail').classList.remove('active');
-  }
-
-  // 打开朋友圈
-  function openMoments() {
-    document.getElementById('momentsView').classList.add('active');
-  }
-
-  // 关闭朋友圈
-  function closeMoments() {
-    document.getElementById('momentsView').classList.remove('active');
-  }
+  function closeChat() { document.getElementById('chatDetail').classList.remove('active'); }
+  function openMoments() { document.getElementById('momentsView').classList.add('active'); }
+  function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
 </script>
 </body>
 </html>
