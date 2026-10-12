@@ -361,7 +361,7 @@
     // 如果有这个人的聊天数据就加载，没有就给默认提示
     const data = chatData[name] || {
       avatar: 'images/dai.png', // 默认头像
-      messages: [{ type: 'left', text: '你好！' }]
+      messages: [{ type: 'left', text: '我通过了你的朋友验证请求，现在我们可以开始聊天了！' }]
     };
 
     data.messages.forEach(msg => {
