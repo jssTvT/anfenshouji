@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>戴的微信</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
+  body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  .phone { width: 375px; height: 812px; background: #ededed; border-radius: 45px; border: 10px solid #2c2c2e; position: relative; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.9); }
+  .notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 140px; height: 30px; background: #000; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; z-index: 1000; }
+  
+  /* 顶部导航 */
+  .header { padding: 50px 15px 15px; background: #ededed; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 17px; position: relative; }
+  .header .title { flex: 1; text-align: center; }
+  .header .icon { font-size: 20px; color: #333; width: 30px; text-align: center; }
+
+  /* 消息列表 */
+  .chat-list { flex: 1; overflow-y: auto; padding-bottom: 60px; }
+  .chat-item { display: flex; align-items: center; padding: 12px 15px; background: #ededed; border-bottom: 1px solid #e0e0e0; cursor: pointer; }
+  .chat-item:active { background: #ddd; }
+  
+  /* 头像区域 */
+  .avatar { width: 48px; height: 48px; border-radius: 6px; background: #ccc; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 18px; font-weight: bold; flex-shrink: 0; position: relative; }
+  .avatar-img { width: 100%; height: 100%; border-radius: 6px; object-fit: cover; }
+  
+  /* 消息内容 */
+  .chat-info { flex: 1; overflow: hidden; }
+  .chat-name { font-size: 16px; color: #000; margin-bottom: 4px; font-weight: 500; }
+  .chat-msg { color: #888; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .chat-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .chat-time { font-size: 12px; color: #aaa; }
+  .chat-badge { background: #ff3b30; color: #fff; font-size: 11px; min-width: 18px; height: 18px; border-radius: 9px; display: flex; justify-content: center; align-items: center; padding: 0 4px; }
+  .chat-mute { font-size: 14px; color: #ccc; } /* 免打扰小图标 */
+  .red-dot { width: 8px; height: 8px; background: #ff3b30; border-radius: 50%; margin-top: 4px; } /* 小红点 */
+
+  /* 底部导航 */
+  .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: #f7f7f7; border-top: 1px solid #ddd; display: flex; justify-content: space-around; align-items: center; z-index: 100; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; color: #888; font-size: 10px; flex: 1; padding: 5px 0; position: relative; }
+  .nav-item.active { color: #07c160; }
+  .nav-item .nav-icon { font-size: 22px; margin-bottom: 2px; }
+  .nav-badge { position: absolute; top: 0; right: 10px; background: #ff3b30; color: #fff; font-size: 10px; min-width: 18px; height: 18px; border-radius: 9px; display: flex; justify-content: center; align-items: center; padding: 0 4px; }
+  .nav-dot { position: absolute; top: 0; right: 15px; width: 8px; height: 8px; background: #ff3b30; border-radius: 50%; }
+
+  /* 聊天详情页和朋友圈 (保留基础功能, 可以后续自己填充) */
+  .chat-detail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ededed; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; z-index: 200; }
+  .chat-detail.active { transform: translateX(0); }
+  .chat-detail .nav-header { padding: 50px 15px 15px; background: #ededed; display: flex; justify-content: center; align-items: center; font-weight: 600; position: relative; }
+  .chat-detail .nav-header .back-btn { position: absolute; left: 15px; bottom: 15px; cursor: pointer; color: #000; display: flex; align-items: center; }
+  .chat-detail .nav-header .back-btn::before { content: "‹"; font-size: 28px; line-height: 1; margin-right: 2px; }
+  .msg-area { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+  .msg { max-width: 75%; padding: 10px 15px; border-radius: 6px; font-size: 15px; line-height: 1.4; word-wrap: break-word; position: relative; }
+  .msg.left { background: #fff; align-self: flex-start; }
+  .msg.right { background: #95ec69; align-self: flex-end; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="notch"></div>
+  
+  <!-- 主界面 -->
+  <div id="mainScreen" style="position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column;">
+    <!-- 顶部 -->
+    <div class="header">
+      <div class="icon">🔍</div>
+      <div class="title">微信(93)</div>
+      <div class="icon">➕</div>
+    </div>
+
+    <!-- 消息列表 -->
+    <div class="chat-list">
+      
+      <!-- 1. 汉语言文学大家庭 -->
+      <div class="chat-item" onclick="openChat('汉语言文学大家庭')">
+        <div class="avatar" style="background:#8e44ad;">群</div>
+        <div class="chat-info">
+          <div class="chat-name">汉语言文学大家庭</div>
+          <div class="chat-msg">学委: ‼️大家不要忘记选课啦</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">上午09:42</div>
+        </div>
+      </div>
+
+      <!-- 2. 楚姐 -->
+      <div class="chat-item" onclick="openChat('楚姐')">
+        <div class="avatar" style="background:#f39c12;">🐶</div> <!-- 有图片后换成 <img src="images/chujie.jpg" class="avatar-img"> -->
+        <div class="chat-info">
+          <div class="chat-name">楚姐</div>
+          <div class="chat-msg">[语音]你选课没？</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">上午09:42</div>
+          <div class="chat-badge">5</div>
+          <div class="chat-mute">🔕</div>
+        </div>
+      </div>
+
+      <!-- 3. 我有早 -->
+      <div class="chat-item" onclick="openChat('我有早')">
+        <div class="avatar" style="background:#e84393;">早</div>
+        <div class="chat-info">
+          <div class="chat-name">我有早</div>
+          <div class="chat-msg">楚姐:服了 那死给</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">下午1:28</div>
+          <div class="chat-badge">73</div>
+        </div>
+      </div>
+
+      <!-- 4. 张佳乐 -->
+      <div class="chat-item" onclick="openChat('张佳乐')">
+        <div class="avatar" style="background:#e74c3c;">张</div>
+        <div class="chat-info">
+          <div class="chat-name">张佳乐</div>
+          <div class="chat-msg">祖宗啊你别睡了</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">下午1:25</div>
+          <div class="chat-badge">3</div>
+        </div>
+      </div>
+
+      <!-- 5. 肖时钦 -->
+      <div class="chat-item" onclick="openChat('肖时钦')">
+        <div class="avatar" style="background:#2c3e50;">肖</div>
+        <div class="chat-info">
+          <div class="chat-name">肖时钦</div>
+          <div class="chat-msg">选课</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">下午1:20</div>
+          <div class="chat-badge">11</div>
+        </div>
+      </div>
+
+      <!-- 6. 孙翔 -->
+      <div class="chat-item" onclick="openChat('孙翔')">
+        <div class="avatar" style="background:#f1c40f; color:#000;">孙</div>
+        <div class="chat-info">
+          <div class="chat-name">孙翔</div>
+          <div class="chat-msg">[语音]醒醒</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">中午12:24</div>
+          <div class="red-dot"></div>
+        </div>
+      </div>
+
+      <!-- 7. 机电3赵禹哲 -->
+      <div class="chat-item" onclick="openChat('机电3赵禹哲')">
+        <div class="avatar" style="background:#3498db;">赵</div>
+        <div class="chat-info">
+          <div class="chat-name">机电3赵禹哲</div>
+          <div class="chat-msg">你选修课选什么</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">上午11:27</div>
+          <div class="chat-mute">🔕</div>
+        </div>
+      </div>
+
+      <!-- 8. 橙子 -->
+      <div class="chat-item" onclick="openChat('橙子')">
+        <div class="avatar" style="background:#e67e22;">🍊</div>
+        <div class="chat-info">
+          <div class="chat-name">橙子</div>
+          <div class="chat-msg">早上十点选课别忘了~</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">上午10:24</div>
+          <div class="chat-badge">1</div>
+          <div class="chat-mute">🔕</div>
+        </div>
+      </div>
+
+      <!-- 9. 大众点评 -->
+      <div class="chat-item" onclick="openChat('大众点评')">
+        <div class="avatar" style="background:#e74c3c;">点</div>
+        <div class="chat-info">
+          <div class="chat-name">大众点评</div>
+          <div class="chat-msg">[链接]你附近的美食推荐</div>
+        </div>
+        <div class="chat-meta">
+          <div class="chat-time">上午09:27</div>
+          <div class="chat-mute">🔕</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <span class="nav-icon">💬</span>微信
+        <div class="nav-badge">93</div>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">👥</span>通讯录
+        <div class="nav-badge">3</div>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">🧭</span>发现
+        <div class="nav-dot"></div>
+      </div>
+      <div class="nav-item">
+        <span class="nav-icon">👤</span>我
+      </div>
+    </div>
+  </div>
+
+  <!-- 聊天详情页（占位，点击可以返回） -->
+  <div class="chat-detail" id="chatDetail">
+    <div class="nav-header">
+      <div class="back-btn" onclick="closeChat()">返回</div>
+      <span id="chatTitle">聊天</span>
+    </div>
+    <div class="msg-area" id="msgArea">
+      <div class="msg left">这是“戴”的聊天记录测试页面。</div>
+      <div class="msg right">你可以在这里填你自己写的对话。</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function openChat(name) {
+    document.getElementById('chatTitle').innerText = name;
+    document.getElementById('chatDetail').classList.add('active');
+  }
+
+  function closeChat() {
+    document.getElementById('chatDetail').classList.remove('active');
+  }
+</script>
+</body>
+</html>
