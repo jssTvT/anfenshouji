@@ -138,7 +138,9 @@
   .moment-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 8px; }
   .moment-images img { width: 100%; height: 100px; object-fit: cover; border-radius: 4px; }
   .moment-footer { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #888; }
-  .moment-like-btn { cursor: pointer; color: #576b95; }
+  .moment-like-btn { cursor: pointer; color: #576b95; user-select: none; transition: color 0.2s; }
+  .moment-like-btn.liked { color: #ff3b30; } /* 点赞后变红 */
+  .like-list .liked-me { color: #576b95; font-weight: 600; }
    /* 朋友圈互动区（纯静态展示） */
   .moments-interaction {
     background: #f7f7f7;
@@ -375,17 +377,14 @@
             </div>
             <div class="moment-footer">
               <span>刚刚</span>
-              <span style="color:#576b95;">❤️ 赞</span>
+              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1')">❤️ 赞</span>
             </div>
-            
-            <!-- 静态互动区 -->
             <div class="moments-interaction">
-              <!-- 点赞列表 -->
-              <div class="like-list">
+              <div class="like-list" id="like-list-1">
                 <span class="icon">❤️</span>
                 <span class="name">楚姐</span>、
                 <span class="name">孙翔</span>、
-                <span class="name">我有早</span>
+                <span class="name">机电3赵禹哲</span>
               </div>
               <!-- 评论列表 -->
               <div class="comment-list">
@@ -412,12 +411,10 @@
             </div>
             <div class="moment-footer">
               <span>昨天</span>
-              <span style="color:#576b95;">❤️ 赞</span>
+              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-2')">❤️ 赞</span>
             </div>
-
-            <!-- 静态互动区 -->
             <div class="moments-interaction">
-              <div class="like-list">
+              <div class="like-list" id="like-list-2">
                 <span class="icon">❤️</span>
                 <span class="name">张佳乐</span>
               </div>
@@ -518,5 +515,42 @@
   function openMoments() { document.getElementById('momentsView').classList.add('active'); }
   function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
 </script>
+  // 切换点赞状态
+  function toggleLike(btn, listId) {
+    const list = document.getElementById(listId);
+    const isLiked = btn.classList.contains('liked');
+    
+    if (!isLiked) {
+      // 1. 按钮变红，文字改成“取消”
+      btn.classList.add('liked');
+      btn.innerText = '❤️ 取消';
+      
+      // 2. 把“我”添加到点赞列表
+      const myName = document.createElement('span');
+      myName.className = 'name liked-me';
+      myName.innerText = '我'; 
+      
+      // 3. 如果列表里本来就有名字，在前面加一个顿号“、”
+      const existingNames = list.querySelectorAll('.name');
+      if (existingNames.length > 0) {
+        const sep = document.createElement('span');
+        sep.innerText = '、';
+        sep.className = 'liked-me-sep';
+        list.appendChild(sep);
+      }
+      list.appendChild(myName);
+      
+    } else {
+      // 1. 恢复按钮状态
+      btn.classList.remove('liked');
+      btn.innerText = '❤️ 赞';
+      
+      // 2. 移除刚才添加的“我”和顿号
+      const myName = list.querySelector('.liked-me');
+      const sep = list.querySelector('.liked-me-sep');
+      if (myName) myName.remove();
+      if (sep) sep.remove();
+    }
+  }
 </body>
 </html>
