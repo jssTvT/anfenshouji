@@ -514,8 +514,7 @@
   function closeChat() { document.getElementById('chatDetail').classList.remove('active'); }
   function openMoments() { document.getElementById('momentsView').classList.add('active'); }
   function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
-</script>
-  // 切换点赞状态
+ // 切换点赞状态
   function toggleLike(btn, listId) {
     const list = document.getElementById(listId);
     const isLiked = btn.classList.contains('liked');
@@ -552,5 +551,6 @@
       if (sep) sep.remove();
     }
   }
+</script>
 </body>
 </html>
