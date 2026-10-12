@@ -360,7 +360,7 @@
     <div class="moments-view" id="momentsView">
       <div class="moments-header">
         <div class="back-btn" onclick="closeMoments()">返回</div>
-        <div class="user-info"><span>戴</span><img src="images/dai.png" alt="戴"></div>
+        <div class="user-info"><span>小魔女大爆炸</span><img src="images/dai.png" alt="戴"></div>
       </div>
       <div class="moments-body">
         
@@ -520,7 +520,6 @@
   function toggleLike(btn, listId) {
     const list = document.getElementById(listId);
     const isLiked = btn.classList.contains('liked');
-    
     if (!isLiked) {
       // 1. 按钮变红，文字改成“取消”
       btn.classList.add('liked');
@@ -529,10 +528,11 @@
       // 2. 创建你的名字
       const myName = document.createElement('span');
       myName.className = 'name liked-me';
-      myName.innerText = myNickname; // 使用你设置的昵称
+      myName.innerText = myNickname; 
       
-      // 3. 把你的名字插到最前面（insertBefore）
-      list.insertBefore(myName, list.firstChild);
+      // 3. 找到爱心图标，把你的名字插到它后面
+      const icon = list.querySelector('.icon');
+      list.insertBefore(myName, icon.nextSibling);
       
       // 4. 如果列表里除了你还有别人，就在你名字后面加个顿号
       const existingNames = list.querySelectorAll('.name'); 
@@ -542,8 +542,8 @@
         sep.className = 'liked-me-sep';
         list.insertBefore(sep, myName.nextSibling); // 插在你的名字后面
       }
-      
-    } else {
+    } 
+   else {
       // 1. 恢复按钮状态
       btn.classList.remove('liked');
       btn.innerText = '❤️ 赞';
