@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>戴的微信</title>
+<title>小戴的微信</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
   body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
@@ -332,7 +332,7 @@
       <div class="tab-view" id="tab-me">
         <div style="padding: 30px; text-align: center; background: #fff;">
           <div style="width: 70px; height: 70px; border-radius: 8px; margin: 0 auto 10px; display: flex; justify-content: center; align-items: center; overflow: hidden;">     <img src="images/dai.png" alt="戴" style="width: 100%; height: 100%; object-fit: cover;"> </div>
-          <div style="font-weight: bold; font-size: 18px;">戴的微信昵称</div>
+          <div style="font-weight: bold; font-size: 18px;">小魔女大爆炸</div>
           <div style="color: #888; font-size: 13px; margin-top: 5px;">微信号：dai_wechat_id</div>
         </div>
         <div class="discover-item"><div class="discover-icon">⭐</div><div class="discover-text">收藏</div><div class="discover-arrow">›</div></div>
@@ -442,6 +442,8 @@
 
   // 你自己的头像
   const myAvatarUrl = 'images/dai.png';
+ // 你的微信昵称
+  const myNickname = '小魔女大爆炸'; 
 
   // 头像映射表（注意检查名字和文件后缀）
   const avatarMap = {
@@ -514,7 +516,7 @@
   function closeChat() { document.getElementById('chatDetail').classList.remove('active'); }
   function openMoments() { document.getElementById('momentsView').classList.add('active'); }
   function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
- // 切换点赞状态
+  // 切换点赞状态
   function toggleLike(btn, listId) {
     const list = document.getElementById(listId);
     const isLiked = btn.classList.contains('liked');
@@ -524,27 +526,29 @@
       btn.classList.add('liked');
       btn.innerText = '❤️ 取消';
       
-      // 2. 把“我”添加到点赞列表
+      // 2. 创建你的名字
       const myName = document.createElement('span');
       myName.className = 'name liked-me';
-      myName.innerText = '我'; 
+      myName.innerText = myNickname; // 使用你设置的昵称
       
-      // 3. 如果列表里本来就有名字，在前面加一个顿号“、”
-      const existingNames = list.querySelectorAll('.name');
-      if (existingNames.length > 0) {
+      // 3. 把你的名字插到最前面（insertBefore）
+      list.insertBefore(myName, list.firstChild);
+      
+      // 4. 如果列表里除了你还有别人，就在你名字后面加个顿号
+      const existingNames = list.querySelectorAll('.name'); 
+      if (existingNames.length > 1) {
         const sep = document.createElement('span');
         sep.innerText = '、';
         sep.className = 'liked-me-sep';
-        list.appendChild(sep);
+        list.insertBefore(sep, myName.nextSibling); // 插在你的名字后面
       }
-      list.appendChild(myName);
       
     } else {
       // 1. 恢复按钮状态
       btn.classList.remove('liked');
       btn.innerText = '❤️ 赞';
       
-      // 2. 移除刚才添加的“我”和顿号
+      // 2. 移除你的名字和附带的顿号
       const myName = list.querySelector('.liked-me');
       const sep = list.querySelector('.liked-me-sep');
       if (myName) myName.remove();
