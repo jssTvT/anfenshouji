@@ -325,6 +325,26 @@
    // 你自己的头像（右侧气泡）
   const myAvatarUrl = 'images/dai.png'; 
 
+// 你自己的头像（右侧气泡）
+const myAvatarUrl = 'images/dai.png';
+
+// 👇 加在这里！头像映射表 👇
+const avatarMap = {
+  '楚姐': 'images/chuyunxiu.png',
+  '张佳乐': 'images/mucheng.png',
+  '孙翔': 'images/sunx.jpg', // 注意这里是 .jpg
+  '方': 'images/fsq.png',
+  '沐橙': 'images/mucheng.png',
+  '戴': 'images/dai.png',
+  // 如果还有其他人，按照上面的格式继续加，名字必须和聊天列表里的名字一模一样！
+};
+
+// 聊天数据（在这里配置每个人的头像和聊天内容）
+const chatData = {
+  '楚姐': {
+    avatar: 'images/chuyunxiu.png', // 对方的头像
+    // ...
+ 
   // 聊天数据（在这里配置每个人的头像和聊天内容）
   const chatData = {
     '楚姐': {
@@ -360,9 +380,9 @@
 
     // 如果有这个人的聊天数据就加载，没有就给默认提示
     const data = chatData[name] || {
-      avatar: 'images/dai.png', // 默认头像
-      messages: [{ type: 'left', text: '我通过了你的朋友验证请求，现在我们可以开始聊天了！' }]
-    };
+  avatar: avatarMap[name] || 'images/dai.png', // 从映射表里找，找不到就用戴的头像
+  messages: [{ type: 'left', text: '我通过了你的朋友验证请求，现在我们可以开始聊天了！' }]
+    }
 
     data.messages.forEach(msg => {
       // 1. 创建整行容器
