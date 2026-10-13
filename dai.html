@@ -86,6 +86,30 @@
   .msg-row { display: flex; align-items: flex-start; margin-bottom: 15px; }
   .msg-row.left { justify-content: flex-start; }
   .msg-row.right { justify-content: flex-end; }
+   /* 群聊名字+气泡的包裹容器（修复宽度挤压） */
+  .msg-content-wrapper {
+    flex: 1;           /* 占据剩余空间 */
+    min-width: 0;      /* 防止 flex 布局撑破容器 */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 限制左侧群聊消息的宽度 */
+  .msg-row.left .msg-content-wrapper {
+    max-width: 75%;
+  }
+
+  /* 修复气泡自身的宽度限制 */
+  .msg {
+    max-width: 100%;    /* 占满包裹容器 */
+    width: fit-content; /* 根据文字长度自适应，不硬撑 */
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    position: relative;
+  }
   /* 群聊中显示谁发的消息 */
   .msg-sender-name { 
     font-size: 12px; 
@@ -548,6 +572,7 @@
         
         // 把名字和气泡塞进一个包裹容器里
         const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'msg-content-wrapper';
         contentWrapper.appendChild(senderName);
         contentWrapper.appendChild(bubbleDiv);
         
