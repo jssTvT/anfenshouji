@@ -878,6 +878,9 @@
     '楚姐': 'images/chuyunxiu.png',
     '我有早': 'images/jiemeiqun.jpg',
     '张佳乐': 'images/zhangjia.jpg',
+    '学委': 'images/xuewei.png',
+    '班长': 'images/banzhang.png',
+    '非非姐': 'images/liufei.png',
     '肖时钦': 'images/xiaoshiq.jpg',
     '孙翔': 'images/sunx.jpg',
     '机电3赵禹哲': 'images/zhaoyuzhe.png',
@@ -885,21 +888,33 @@
     '大众点评': 'images/dzdp.jpg',
     '刘小别': 'images/liuxiaobie.jpg',
     '唐昊': 'images/tanghao.jpg',
-    '方': 'images/fsq.png'
+    '方士谦': 'images/fsq.png'
   };
 
   // 聊天数据（每个人发过的消息，没有配置的会走默认逻辑）
   const chatData = {
-    '汉语言文学大家庭': {
+     '汉语言文学大家庭': {
       avatar: 'images/hanyuyan.png', // 群头像
       isGroup: true, // 标记为群聊
       messages: [
-        { type: 'time', text: '上午09:42' },
-        { type: 'left', sender: '楚姐', text: '大家不要忘记选课啦！' },
-        { type: 'left', sender: '张佳乐', text: '收到，马上就去。' },
-        { type: 'left', sender: '孙翔', text: '选什么课啊？' },
-        { type: 'right', text: '体育课选足球！' },
-        { type: 'left', sender: '赵禹哲', text: '你图啥啊，大太阳晒着。' }
+        { type: 'time', text: '9月19日 15:30' },
+        { 
+          type: 'left', 
+          sender: '学委', 
+          text: '【班级通知】\n本学期选课系统将于本周日早上10:00开放，请大家提前登录教务系统核对培养方案，体育选修课名额紧张，选课后及时确认提交，逾期不再补录。\n本周五中午在最后一节课的教室开个小班会~无法到场的同学提前私信请假~\n微课程报名截止下周一晚22点，有需要的同学务必按时填报，逾期无法申请。' 
+        },
+        { type: 'time', text: '9月20日 11:38' },
+        { 
+          type: 'left', 
+          sender: '班长', 
+          text: '学生会的走班宣讲工作已经陆续结束，将于下周开始正式报名，感兴趣的同学可以参与' 
+        },
+        { type: 'time', text: '09:42' },
+        { 
+          type: 'left', 
+          sender: '学委', 
+          text: '‼️大家不要忘记选课啦' 
+        }
       ]
     },
    '楚姐': {
