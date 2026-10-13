@@ -901,7 +901,7 @@
         { 
           type: 'left', 
           sender: '学委', 
-          text: '【班级通知】\n本学期选课系统将于本周日早上10:00开放，请大家提前登录教务系统核对培养方案，体育选修课名额紧张，选课后及时确认提交，逾期不再补录。\n本周五中午在最后一节课的教室开个小班会~无法到场的同学提前私信请假~\n微课程报名截止下周一晚22点，有需要的同学务必按时填报，逾期无法申请。' 
+          text: '【班级通知】\n本学期选课系统将于本周日早上10:00开放，请大家提前登录教务系统核对培养方案，体育选修课名额紧张，选课后及时确认提交，逾期不再补录。\n本周五中午在最后一节课的教室开个小班会~无法到场的同学提前私信请假~' 
         },
         { type: 'time', text: '9月20日 11:38' },
         { 
@@ -917,12 +917,137 @@
         }
       ]
     },
-   '楚姐': {
+'楚姐': {
       avatar: 'images/chuyunxiu.png',
       messages: [
-        { type: 'left', text: '你选课没？' },
-        { type: 'right', text: '还没，我还在纠结。' },
-        { type: 'left', text: '快点选，晚了就没好课了！' }
+        { type: 'time', text: '08:44' },
+        { type: 'left', text: '我跟沐橙下午想出去玩呀，你要不要一起' },
+        { type: 'left', text: '[语音] 60"' }, // 如果你有专门的语音样式可以换成图片
+        { type: 'left', text: '想出去转转看一下，然后去喝咖啡呀，你要不要一起呀？我觉得那家店还蛮好吃的。' },
+        { type: 'time', text: '13:25' },
+        { type: 'left', text: '？' },
+        { type: 'left', text: '你不会还在睡吧？' },
+        { type: 'left', text: '你选课没？' }
+      ]
+    },
+
+    // 3. 也不想早(9) 群聊
+    '也不想早(9)': {
+      avatar: 'images/jiemeiqun.jpg', // 群头像，请确认图片名
+      isGroup: true,
+      messages: [
+        { type: 'time', text: '13:21' },
+        { type: 'left', sender: '非非姐', text: '所以统计学有男同到底保不保真' },
+        { type: 'left', sender: '楚姐', text: '假吧' },
+        { type: 'left', sender: '非非姐', text: '那方锐为什么一直叫吴羽策老公啊😱' },
+        { type: 'left', sender: '🍊', text: '很正常呀，也叫我老公呢' },
+        { type: 'left', sender: '楚姐', text: '服了，那死给' }
+      ]
+    },
+
+    // 4. 张佳乐
+    '张佳乐': {
+      avatar: 'images/zhangjia.jpg',
+      messages: [
+        { type: 'time', text: '10:13' },
+        { type: 'left', text: '起了没？' },
+        { type: 'time', text: '10:51' },
+        { type: 'left', text: '选课' },
+        { type: 'time', text: '13:20' },
+        { type: 'left', text: '祖宗啊你别睡了' },
+        { type: 'time', text: '13:37' },
+        { type: 'right', text: '谢谢' },
+        { type: 'right', text: '醒了。' },
+        { type: 'time', text: '17:32' },
+        { type: 'left', text: '你体育课选足球啊' },
+        { type: 'right', text: '嗯呐' },
+        { type: 'right', text: '怎么了' },
+        { type: 'left', text: '你图啥啊' },
+        { type: 'right', text: '热爱 不行吗' },
+        { type: 'left', text: '你要成黑皮体育生了' },
+        { type: 'right', text: '足球足球我们爱足球' },
+        { type: 'right', text: '足球充满了魔力 充满了魅力' },
+        { type: 'left', text: '锁妹牛逼' }
+      ]
+    },
+
+    // 5. 肖时钦
+    '肖时钦': {
+      avatar: 'images/xiaoshiq.jpg',
+      messages: [
+        { type: 'time', text: '08:58' },
+        { type: 'left', text: '你选完课方不方便来开个小会呀' },
+        { type: 'left', text: '很短的十几分钟' },
+        { type: 'left', text: '或者线上也可以的' },
+        { type: 'time', text: '11:36' },
+        { type: 'left', text: '好的' },
+        { type: 'left', text: '会开完了' },
+        { type: 'left', text: '晚点要点发你一份' },
+        { type: 'time', text: '11:58' },
+        { type: 'left', text: '不对' },
+        { type: 'left', text: '你醒了吗' },
+        { type: 'left', text: '选课选课' },
+        { type: 'left', text: '记得选课' },
+        { type: 'time', text: '12:24' },
+        { type: 'left', text: '选课' }
+      ]
+    },
+
+    // 6. 孙翔
+    '孙翔': {
+      avatar: 'images/sunx.jpg',
+      messages: [
+        { type: 'time', text: '11:27' },
+        { type: 'left', text: '醒醒' },
+        { type: 'time', text: '13:58' },
+        { type: 'right', text: '嗯。' },
+        { type: 'left', text: '厉害。' },
+        { type: 'time', text: '16:58' },
+        { type: 'left', text: '你给喻文州评论干嘛' },
+        { type: 'left', text: '你不会真想加入学生会吧' },
+        { type: 'left', text: '哇我哥们之前要退出然后喻文州给他说要写三千字退部申请啊' },
+        { type: 'left', text: '对了说到我哥们，期末考行进间传球可以让他给你当搭档' },
+        { type: 'right', text: '？不用了' },
+        { type: 'left', text: '这也是张佳乐学弟呀，不用客气，都哥们' }
+      ]
+    },
+
+    // 7. 机电3赵禹哲
+    '机电3赵禹哲': {
+      avatar: 'images/zhaoyuzhe.png',
+      messages: [
+        { type: 'time', text: '9月19日 19:31' },
+        { type: 'left', text: '学生会去你们班宣讲了吗' },
+        { type: 'left', text: '那人谁啊好装逼啊' },
+        { type: 'left', text: '一股大三气质' },
+        { type: 'right', text: '大哥。' },
+        { type: 'right', text: '大三气质是什么气质' },
+        { type: 'right', text: '会长不是大三难道还能是小三吗' },
+        { type: 'left', text: '道德这么败坏还能当会长？' },
+        { type: 'time', text: '9月20日 14:58' },
+        { type: 'left', text: '你怎么不理我了' },
+        { type: 'time', text: '10:24' },
+        { type: 'left', text: '你选修课选什么' }
+      ]
+    },
+
+    // 8. 🍊
+    '🍊': {
+      avatar: 'images/mucheng.png',
+      messages: [
+        { type: 'time', text: '9月19日 12:54' },
+        { type: 'left', text: '你想来的话就去非非的部门呀，也是我管的哦' },
+        { type: 'left', text: '不过我们是不会给你开后门的~' },
+        { type: 'right', text: '嗯嗯' },
+        { type: 'time', text: '09:27' },
+        { type: 'left', text: '早上十点选课别忘啦~' },
+        { type: 'time', text: '15:52' },
+        { type: 'right', text: '我。忘了。' },
+        { type: 'left', text: '哈哈' },
+        { type: 'left', text: '最后选到啦就好了哦' },
+      
+        { type: 'left', text: '<img src="images/cake.jpg" style="max-width:75%; border-radius:4px;">' }, 
+        { type: 'left', text: '你没回消息我就跟秀秀先出门啦，蛋糕很好吃哦，等你下次一起~' }
       ]
     }
   };
@@ -968,7 +1093,7 @@
       // 3. 创建气泡
       const bubbleDiv = document.createElement('div');
       bubbleDiv.className = `msg ${msg.type}`;
-      bubbleDiv.innerText = msg.text; 
+      bubbleDiv.innerHTML = msg.text; 
 
       // 4. 组装整行
       const rowDiv = document.createElement('div');
