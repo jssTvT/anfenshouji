@@ -91,6 +91,30 @@
     width: 100%;        /* 占满整行 */
     display: block;     /* 确保是块级元素 */
   }
+   /* 无背景的纯图片消息 */
+  .msg-image {
+    max-width: 60%;       /* 限制图片最大宽度，防止撑破屏幕 */
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .msg-image img {
+    max-width: 100%;
+    border-radius: 8px;   /* 图片自带圆角，更像微信 */
+    display: block;
+  }
+  
+  /* 左侧图片（对方发的） */
+  .msg-image.left {
+    align-self: flex-start;
+    margin-left: 10px;
+  }
+  
+  /* 右侧图片（你自己发的） */
+  .msg-image.right {
+    align-self: flex-end;
+    margin-right: 10px;
+  }
  /* 聊天详情页的消息行 */
   .msg-row { display: flex; align-items: flex-start; margin-bottom: 15px; }
   .msg-row.left { justify-content: flex-start; }
@@ -1091,10 +1115,14 @@
       avatarDiv.appendChild(img);
 
       // 3. 创建气泡
+            // 3. 创建气泡（新增判断：如果是图片，就使用无背景的 msg-image 样式）
       const bubbleDiv = document.createElement('div');
-      bubbleDiv.className = `msg ${msg.type}`;
-      bubbleDiv.innerHTML = msg.text; 
-
+      if (msg.text && msg.text.includes('<img')) {
+        bubbleDiv.className = `msg-image ${msg.type}`; // 图片专用类名
+      } else {
+        bubbleDiv.className = `msg ${msg.type}`; // 普通文字气泡类名
+      }
+      bubbleDiv.innerHTML = msg.text;
       // 4. 组装整行
       const rowDiv = document.createElement('div');
       rowDiv.className = `msg-row ${msg.type}`;
