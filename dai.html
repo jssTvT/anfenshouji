@@ -82,7 +82,16 @@
   .chat-detail.active { transform: translateX(0); }
   .msg-area { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
    { max-width: 75%; padding: 10px 15px; border-radius: 6px; font-size: 15px; line-height: 1.4; word-wrap: break-word; position: relative; }
-    /* 聊天详情页的消息行 */
+    /* 聊天时间戳居中显示 */
+  .msg-time { 
+    text-align: center; 
+    font-size: 12px; 
+    color: #b2b2b2; 
+    margin: 15px 0; 
+    width: 100%;        /* 占满整行 */
+    display: block;     /* 确保是块级元素 */
+  }
+ /* 聊天详情页的消息行 */
   .msg-row { display: flex; align-items: flex-start; margin-bottom: 15px; }
   .msg-row.left { justify-content: flex-start; }
   .msg-row.right { justify-content: flex-end; }
@@ -96,7 +105,7 @@
   
   /* 限制左侧群聊消息的宽度 */
   .msg-row.left .msg-content-wrapper {
-    max-width: 75%;
+    max-width: 85%;
   }
 
   /* 修复气泡自身的宽度限制 */
@@ -115,7 +124,6 @@
     font-size: 12px; 
     color: #888; 
     margin-bottom: 4px; 
-    margin-left: 50px; /* 和头像宽度对齐 */
     display: block;
   }
   /* 聊天头像 */
