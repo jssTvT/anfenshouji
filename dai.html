@@ -86,7 +86,14 @@
   .msg-row { display: flex; align-items: flex-start; margin-bottom: 15px; }
   .msg-row.left { justify-content: flex-start; }
   .msg-row.right { justify-content: flex-end; }
-
+  /* 群聊中显示谁发的消息 */
+  .msg-sender-name { 
+    font-size: 12px; 
+    color: #888; 
+    margin-bottom: 4px; 
+    margin-left: 50px; /* 和头像宽度对齐 */
+    display: block;
+  }
   /* 聊天头像 */
   .msg-avatar { width: 40px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; background: #ccc; }
   .msg-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -464,7 +471,19 @@
 
   // 聊天数据（每个人发过的消息，没有配置的会走默认逻辑）
   const chatData = {
-    '楚姐': {
+    '汉语言文学大家庭': {
+      avatar: 'images/hanyuyan.png', // 群头像
+      isGroup: true, // 标记为群聊
+      messages: [
+        { type: 'time', text: '上午09:42' },
+        { type: 'left', sender: '楚姐', text: '大家不要忘记选课啦！' },
+        { type: 'left', sender: '张佳乐', text: '收到，马上就去。' },
+        { type: 'left', sender: '孙翔', text: '选什么课啊？' },
+        { type: 'right', text: '体育课选足球！' },
+        { type: 'left', sender: '赵禹哲', text: '你图啥啊，大太阳晒着。' }
+      ]
+    },
+   '楚姐': {
       avatar: 'images/chuyunxiu.png',
       messages: [
         { type: 'left', text: '你选课没？' },
@@ -487,25 +506,62 @@
     };
 
     data.messages.forEach(msg => {
-      const rowDiv = document.createElement('div');
-      rowDiv.className = `msg-row ${msg.type}`;
+      // 1. 如果是时间，显示居中时间
+      if (msg.type === 'time') {
+        const timeDiv = document.createElement('div');
+        timeDiv.className = 'msg-time';
+        timeDiv.innerText = msg.text;
+        msgArea.appendChild(timeDiv);
+        return;
+      }
 
+      // 2. 创建头像
       const avatarDiv = document.createElement('div');
       avatarDiv.className = 'msg-avatar';
       const img = document.createElement('img');
-      img.src = msg.type === 'left' ? data.avatar : myAvatarUrl;
+      
+      // 核心逻辑：群聊时，根据 sender 找头像
+      if (msg.type === 'right') {
+        img.src = myAvatarUrl; 
+      } else if (msg.sender) {
+        // 如果是群聊，且是别人发的，去映射表找发送者的专属头像
+        img.src = avatarMap[msg.sender] || data.avatar; 
+      } else {
+        img.src = data.avatar; 
+      }
       avatarDiv.appendChild(img);
 
+      // 3. 创建气泡
       const bubbleDiv = document.createElement('div');
       bubbleDiv.className = `msg ${msg.type}`;
-      bubbleDiv.innerText = msg.text;
+      bubbleDiv.innerText = msg.text; 
 
-      if (msg.type === 'left') {
+      // 4. 组装整行
+      const rowDiv = document.createElement('div');
+      rowDiv.className = `msg-row ${msg.type}`;
+      
+      // 5. 如果群聊中对方发了消息，在气泡上方加上名字
+      if (msg.type === 'left' && msg.sender) {
+        const senderName = document.createElement('div');
+        senderName.className = 'msg-sender-name';
+        senderName.innerText = msg.sender;
+        
+        // 把名字和气泡塞进一个包裹容器里
+        const contentWrapper = document.createElement('div');
+        contentWrapper.appendChild(senderName);
+        contentWrapper.appendChild(bubbleDiv);
+        
         rowDiv.appendChild(avatarDiv);
-        rowDiv.appendChild(bubbleDiv);
+        rowDiv.appendChild(contentWrapper);
       } else {
-        rowDiv.appendChild(bubbleDiv);
-        rowDiv.appendChild(avatarDiv);
+        // 普通的单聊逻辑（左边头像+气泡，或者右边气泡+头像）
+        if (msg.type === 'left') {
+          rowDiv.appendChild(avatarDiv);
+          rowDiv.appendChild(bubbleDiv);
+        } else {
+          rowDiv.appendChild(bubbleDiv);
+          rowDiv.appendChild(avatarDiv);
+        }
       }
       msgArea.appendChild(rowDiv);
     });
