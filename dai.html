@@ -504,7 +504,7 @@
           </div>
                <!-- 第三条动态：方锐 -->
         <div class="moment-item">
-          <div class="moment-avatar"><img src="images/fangrui.png" alt="方锐"></div> <!-- 👈 换成你的方锐头像 -->
+          <div class="moment-avatar"><img src="images/fangrui1.png" alt="方锐"></div> <!-- 👈 换成你的方锐头像 -->
           <div class="moment-content">
             <div class="moment-name">方锐</div>
             <div class="moment-text">悄悄读个成人本科吧</div>
@@ -671,7 +671,7 @@
             
             <!-- 分享链接卡片 -->
             <div class="moment-link">
-              <img src="images/xueshenghui.jpg" alt="R"> <!-- 👈 换成卡片缩略图 -->
+              <img src="images/yuwenzhou.png" alt="R"> 
               <div class="link-text">R大学生会，就差你啦！！</div>
             </div>
             
@@ -810,6 +810,49 @@
             </div>
           </div>
         </div>
+               <!-- 第九条动态：R大校园墙 -->
+        <div class="moment-item">
+          <div class="moment-avatar"><img src="images/rda.png" alt="R大校园墙"></div> <!-- 👈 换成校园墙的头像 -->
+          <div class="moment-content">
+            <div class="moment-name">R大校园墙</div>
+            <div class="moment-text">有人认识金融大三的喻文州吗，有偿100r</div>
+            
+            <div class="moment-footer">
+              <span>3小时前</span>
+              <!-- 注意：这里是 like-list-9 -->
+              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-9')">❤️ 赞</span>
+            </div>
+
+            <div class="moments-interaction">
+              <!-- 点赞列表 -->
+              <div class="like-list" id="like-list-9">
+                <span class="icon">❤️</span>
+                <!-- 如果之后想加点赞人，可以在这里加 <span class="name">名字</span> -->
+              </div>
+              <!-- 评论区 -->
+              <div class="comment-list">
+                <div class="comment-item">
+                  <span class="name">方锐</span><span class="content">：我认识视传大三的吴羽策行吗</span>
+                </div>
+                <div class="comment-item">
+                  <span class="name">张佳乐</span><span class="content">：我认识临床大五的方士谦行吗</span>
+                </div>
+                <div class="comment-item">
+                  <span class="name">方士谦</span><span class="content">回复 </span><span class="name">张佳乐</span><span class="content">：？我认识生工大五（延毕）的张佳乐行吗</span>
+                </div>
+                <div class="comment-item">
+                  <span class="name">黄少天</span><span class="content">：我认识新传大三的苏沐橙行吗</span>
+                </div>
+                <div class="comment-item">
+                  <span class="name">孙翔</span><span class="content">：我认识计算机大三的小事情行吗</span>
+                </div>
+                <div class="comment-item">
+                  <span class="name">喻文州</span><span class="content">：我认识哲学大四的王杰希行吗</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
 
@@ -878,7 +921,7 @@
     // 优先查 chatData，没有则用映射表和默认消息
     const data = chatData[name] || {
       avatar: avatarMap[name] || myAvatarUrl, // 去映射表找头像，找不到就用你自己的
-      messages: [{ type: 'left', text: '我通过了你的朋友验证请求，现在我们可以开始聊天了！' }] // 默认你自己发起对话
+      messages: [{ type: 'left', text: '怎么这个也要看！' }] // 默认你自己发起对话
     };
 
     data.messages.forEach(msg => {
