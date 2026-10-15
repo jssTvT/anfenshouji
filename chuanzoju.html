@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>测试的微信</title>
+<title>♟️的微信</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
   body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
@@ -27,6 +27,7 @@
   .chat-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
   .chat-time { font-size: 12px; color: #aaa; }
   .chat-badge { background: #ff3b30; color: #fff; font-size: 11px; min-width: 18px; height: 18px; border-radius: 9px; display: flex; justify-content: center; align-items: center; padding: 0 4px; }
+  .chat-mute { font-size: 14px; color: #b3b3b3; }
   .contact-item { display: flex; align-items: center; padding: 15px; background: #fff; border-bottom: 1px solid #f0f0f0; }
   .contact-avatar { width: 40px; height: 40px; border-radius: 4px; background: #07c160; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; font-size: 16px; overflow: hidden; }
   .contact-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -54,6 +55,10 @@
   .msg.left::before { content: ""; position: absolute; left: -6px; top: 12px; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-right: 6px solid #fff; }
   .msg.right { background: #95ec69; }
   .msg.right::after { content: ""; position: absolute; right: -6px; top: 12px; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 6px solid #95ec69; }
+  .msg-image { max-width: 60%; margin-bottom: 10px; display: flex; align-items: flex-end; }
+  .msg-image img { max-width: 100%; border-radius: 8px; display: block; }
+  .msg-image.left { align-self: flex-start; margin-left: 10px; }
+  .msg-image.right { align-self: flex-end; margin-right: 10px; }
   .msg-time { text-align: center; font-size: 12px; color: #b2b2b2; margin: 15px 0; width: 100%; display: block; }
   .msg-sender-name { font-size: 12px; color: #888; margin-bottom: 4px; margin-left: 5px; display: block; }
   .msg-content-wrapper { flex: 1; min-width: 0; display: flex; flex-direction: column; max-width: 85%; }
@@ -61,7 +66,7 @@
   .chat-input-area input { width: 100%; padding: 10px 15px; border-radius: 6px; border: 1px solid #ddd; outline: none; font-size: 15px; }
   .moments-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; z-index: 300; }
   .moments-view.active { transform: translateX(0); }
-  .moments-header { position: relative; height: 250px; background: url('images/bg.jpg') center/cover no-repeat; background-color: #667eea; }
+  .moments-header { position: relative; height: 250px; background: url('images/tanghao.jpg') center/cover no-repeat; background-color: #667eea; }
   .moments-header .back-btn { position: absolute; top: 55px; left: 15px; color: #fff; cursor: pointer; font-size: 16px; display: flex; align-items: center; z-index: 10; text-shadow: 0 1px 3px #000; }
   .moments-header .back-btn::before { content: "‹"; font-size: 28px; margin-right: 2px; line-height: 1; }
   .moments-header .user-info { position: absolute; bottom: 20px; right: 20px; display: flex; align-items: center; color: #fff; text-shadow: 0 1px 3px #000; }
@@ -94,26 +99,36 @@
   <div class="notch"></div>
   <div class="status-bar"><span>13:33</span><span>📶 🔋</span></div>
   <div class="wechat-app">
-    <div class="nav-header" id="mainHeader">微信</div>
+    <div class="nav-header" id="mainHeader">微信(93)</div>
     <div class="main-content">
       <div class="tab-view active" id="tab-chats">
-        <div class="chat-item" onclick="openChat('测')">
-          <div class="chat-avatar"><img src="https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/562009826_18087371101912276_4655210895562344551_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=105&ig_cache_key=MjgzMTMyMTQ2MjgyNTMxMzY0MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjc1MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=edTOXyNmOlIQ7kNvwF-ljGC&_nc_oc=Adr55p8Zslq4eHr7Iknf-f-beTPxYjVe5aYXUzjgdn4JYY4dJBnxzY9fWVEVFFMex_A&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=foRbjCK4_7Xn6a_FTU_wVQ&_nc_ss=796a8&oh=00_AQNj2H5cSNPOdQklu1IPF6O_kqfaz2E512kAAlGaxGaeHw&oe=6AD6CC7E" alt="测"></div>
+        <div class="chat-item" onclick="openChat('群聊（4）')">
+          <div class="chat-avatar"><img src="images/tanghao.jpg" alt="群聊（4）"></div>
           <div class="chat-info">
-            <div class="chat-name">测</div>
-            <div class="chat-msg">点击查看聊天</div>
+            <div class="chat-name">群聊（4）</div>
+            <div class="chat-msg">刘小别: 不是</div>
+          </div>
+          <div class="chat-meta">
+            <div class="chat-time">刚刚</div>
+            
+            
           </div>
         </div>
-        <div class="chat-item" onclick="openChat('班级群')">
-          <div class="chat-avatar"><img src="https://scontent-nrt1-2.cdninstagram.com/v/t51.82787-15/569211430_18537055762019838_3234189589210615829_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=107&ig_cache_key=MjYzOTgyODY4MTg1OTgzODA3MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjEwODAuc2RyLnJlZ3VsYXJfcGhvdG8uQzMifQ%3D%3D&_nc_ohc=a9l3w6XlJksQ7kNvwE3GqIY&_nc_oc=Ado3gzncFPxDj4FqXYHh5kaUa6gyzG1yZX_U4gc1TpXz0_RGm0_oBFoTiFtLeRS5BKI&_nc_zt=23&_nc_ht=scontent-nrt1-2.cdninstagram.com&_nc_gid=U5aZGn3K4WH2Hno57tMl2A&_nc_ss=796a8&oh=00_AQM8XlucPQpwGDYMXvWWw9L6s1QydaEIgg8taQ_nyiTzvw&oe=6AD6CF0A" alt="班级群"></div>
+        <div class="chat-item" onclick="openChat('林')">
+          <div class="chat-avatar"><img src="images/lin.png" alt="林"></div>
           <div class="chat-info">
-            <div class="chat-name">班级群</div>
-            <div class="chat-msg">点击查看聊天</div>
+            <div class="chat-name">林</div>
+            <div class="chat-msg">人呢</div>
+          </div>
+          <div class="chat-meta">
+            <div class="chat-time">“林”撤回了一条消息</div>
+            
+            <div class="chat-mute">🔕</div>
           </div>
         </div></div>
       <div class="tab-view" id="tab-contacts">
-        <div class="contact-item"><div class="contact-avatar"><img src="https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/562009826_18087371101912276_4655210895562344551_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=105&ig_cache_key=MjgzMTMyMTQ2MjgyNTMxMzY0MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjc1MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=edTOXyNmOlIQ7kNvwF-ljGC&_nc_oc=Adr55p8Zslq4eHr7Iknf-f-beTPxYjVe5aYXUzjgdn4JYY4dJBnxzY9fWVEVFFMex_A&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=foRbjCK4_7Xn6a_FTU_wVQ&_nc_ss=796a8&oh=00_AQNj2H5cSNPOdQklu1IPF6O_kqfaz2E512kAAlGaxGaeHw&oe=6AD6CC7E" alt="测"></div> 测</div>
-        <div class="contact-item"><div class="contact-avatar"><img src="https://scontent-nrt1-2.cdninstagram.com/v/t51.82787-15/569211430_18537055762019838_3234189589210615829_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=107&ig_cache_key=MjYzOTgyODY4MTg1OTgzODA3MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjEwODAuc2RyLnJlZ3VsYXJfcGhvdG8uQzMifQ%3D%3D&_nc_ohc=a9l3w6XlJksQ7kNvwE3GqIY&_nc_oc=Ado3gzncFPxDj4FqXYHh5kaUa6gyzG1yZX_U4gc1TpXz0_RGm0_oBFoTiFtLeRS5BKI&_nc_zt=23&_nc_ht=scontent-nrt1-2.cdninstagram.com&_nc_gid=U5aZGn3K4WH2Hno57tMl2A&_nc_ss=796a8&oh=00_AQM8XlucPQpwGDYMXvWWw9L6s1QydaEIgg8taQ_nyiTzvw&oe=6AD6CF0A" alt="班级群"></div> 班级群</div></div>
+        <div class="contact-item"><div class="contact-avatar"><img src="images/tanghao.jpg" alt="群聊（4）"></div> 群聊（4）</div>
+        <div class="contact-item"><div class="contact-avatar"><img src="images/lin.png" alt="林"></div> 林</div></div>
       <div class="tab-view" id="tab-discover">
         <div class="discover-item" onclick="openMoments()">
           <div class="discover-icon">📷</div>
@@ -126,10 +141,10 @@
       <div class="tab-view" id="tab-me">
         <div style="padding: 30px; text-align: center; background: #fff;">
           <div style="width: 70px; height: 70px; border-radius: 8px; margin: 0 auto 10px; overflow: hidden;">
-            <img src="https://scontent-nrt1-1.cdninstagram.com/v/t51.82787-15/555415222_18102815476619085_1003216217167227820_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=108&ig_cache_key=MjMzMzk2ODk3MTI1NzU3NjQ5Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjEyNDIuc2RyLnJlZ3VsYXJfcGhvdG8uQzMifQ%3D%3D&_nc_ohc=hnpkjLdhxWIQ7kNvwESmlRY&_nc_oc=Ado8xUqlW2frxr1qbcy4f1rQ25SXzG_OBjusuJWTzIwK5Zs-L2Nz9WyS9sYXrxR6DXs&_nc_zt=23&_nc_ht=scontent-nrt1-1.cdninstagram.com&_nc_gid=MyOkmPuarKGq6LhjNoGfIw&_nc_ss=796a8&oh=00_AQNmRwWTp1xXcMwTKMYcGQqCOWbvSChURVoFDVk0z72JFQ&oe=6AD6BC4E" alt="测试" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="images/tanghao.jpg" alt="♟️" style="width: 100%; height: 100%; object-fit: cover;">
           </div>
-          <div style="font-weight: bold; font-size: 18px;">测试</div>
-          <div style="color: #888; font-size: 13px; margin-top: 5px;">微信号：测试_wx</div>
+          <div style="font-weight: bold; font-size: 18px;">♟️</div>
+          <div style="color: #888; font-size: 13px; margin-top: 5px;">微信号：♟️_wx</div>
         </div>
         <div class="discover-item"><div class="discover-icon">⭐</div><div class="discover-text">收藏</div><div class="discover-arrow">›</div></div>
         <div class="discover-item"><div class="discover-icon">🖼️</div><div class="discover-text">相册</div><div class="discover-arrow">›</div></div>
@@ -137,7 +152,7 @@
       </div>
     </div>
     <div class="bottom-nav">
-      <div class="nav-item active" onclick="switchTab('tab-chats', '微信')"><span class="nav-icon">💬</span>微信</div>
+      <div class="nav-item active" onclick="switchTab('tab-chats', '微信(93)')"><span class="nav-icon">💬</span>微信</div>
       <div class="nav-item" onclick="switchTab('tab-contacts', '通讯录')"><span class="nav-icon">👥</span>通讯录</div>
       <div class="nav-item" onclick="switchTab('tab-discover', '发现')"><span class="nav-icon">🧭</span>发现</div>
       <div class="nav-item" onclick="switchTab('tab-me', '我')"><span class="nav-icon">👤</span>我</div>
@@ -150,27 +165,24 @@
     <div class="moments-view" id="momentsView">
       <div class="moments-header">
         <div class="back-btn" onclick="closeMoments()">返回</div>
-        <div class="user-info"><span>测试</span><img src="https://scontent-nrt1-1.cdninstagram.com/v/t51.82787-15/555415222_18102815476619085_1003216217167227820_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=108&ig_cache_key=MjMzMzk2ODk3MTI1NzU3NjQ5Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjEyNDIuc2RyLnJlZ3VsYXJfcGhvdG8uQzMifQ%3D%3D&_nc_ohc=hnpkjLdhxWIQ7kNvwESmlRY&_nc_oc=Ado8xUqlW2frxr1qbcy4f1rQ25SXzG_OBjusuJWTzIwK5Zs-L2Nz9WyS9sYXrxR6DXs&_nc_zt=23&_nc_ht=scontent-nrt1-1.cdninstagram.com&_nc_gid=MyOkmPuarKGq6LhjNoGfIw&_nc_ss=796a8&oh=00_AQNmRwWTp1xXcMwTKMYcGQqCOWbvSChURVoFDVk0z72JFQ&oe=6AD6BC4E" alt="头像"></div>
+        <div class="user-info"><span>♟️</span><img src="images/tanghao.jpg" alt="头像"></div>
       </div>
       <div class="moments-body">
         <div class="moment-item">
-          <div class="moment-avatar"><img src="https://scontent-nrt1-1.cdninstagram.com/v/t51.82787-15/562331826_18052047101307947_2654889398380491584_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=103&ig_cache_key=MjYzOTgyODc1Mjk3ODQzMDQwMw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjEwODAuc2RyLnJlZ3VsYXJfcGhvdG8uQzMifQ%3D%3D&_nc_ohc=25v7797ch20Q7kNvwG1JL1y&_nc_oc=Adpkmj4_AO5yksfG1Px4b_fc7_E_XCqKSakoQ8tbgdNA8-jKgMX_UTJ_3PINs22sq1k&_nc_zt=23&_nc_ht=scontent-nrt1-1.cdninstagram.com&_nc_gid=U5aZGn3K4WH2Hno57tMl2A&_nc_ss=796a8&oh=00_AQOabyu0vTXmkGRjYFbDh0aslAGqNl1Tole9MbordAf76A&oe=6AD6A54B" alt="1"></div>
+          <div class="moment-avatar"><img src="images/fangrui1.png" alt="方锐"></div>
           <div class="moment-content">
-            <div class="moment-name">1</div>
-            <div class="moment-text">顺利</div>
+            <div class="moment-name">方锐</div>
+            <div class="moment-text">回家一趟把马桶盖子整碎了。。。</div>
             
-        <div class="moment-images">
-          <img src="https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/573908054_18324742657240186_8438491316958297039_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=105&ig_cache_key=MjYzOTgyODc5MTIyMjA5OTQ3OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjEwODAuc2RyLnJlZ3VsYXJfcGhvdG8uQzMifQ%3D%3D&_nc_ohc=wOiHwOMH2tMQ7kNvwHTxkof&_nc_oc=AdoeH1Yu8pkHgd7AfMKhYdydLA2f8lVfoYMWaV9IT1YVwW_xxuJeStBu-C3CjpOI_dg&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=U5aZGn3K4WH2Hno57tMl2A&_nc_ss=796a8&oh=00_AQMn__UrJWVBZKifWN2IEwtrBkYzk-fwIi0zFabsqtwNvg&oe=6AD6A73C" alt="">
-        </div>
             <div class="moment-footer">
-              <span>刚刚</span>
-              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792075102020')">❤️ 赞</span>
+              <span></span>
+              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792076153177')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
-              <div class="like-list" id="like-list-1792075102020"><span class="icon">❤️</span><span class="name">12</span>、<span class="name">3</span></div>
+              <div class="like-list" id="like-list-1792076153177"></div>
               
         <div class="comment-list">
-          <div class="comment-item"><span class="name">1</span><span class="content">：？</span></div><div class="comment-item"><span class="name"> 2</span><span class="content">：000~</span></div><div class="comment-item"><span class="name"> 测试</span><span class="content">：回复 0：欧坤姐！</span></div>
+          <div class="comment-item"><span class="name">方锐</span><span class="content">：这个家已经留不住我了。。。。</span></div>
         </div>
             </div>
           </div>
@@ -179,25 +191,32 @@
   </div>
 </div>
 <script>
-  const myAvatarUrl = 'https://scontent-nrt1-1.cdninstagram.com/v/t51.82787-15/555415222_18102815476619085_1003216217167227820_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=108&ig_cache_key=MjMzMzk2ODk3MTI1NzU3NjQ5Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjEyNDIuc2RyLnJlZ3VsYXJfcGhvdG8uQzMifQ%3D%3D&_nc_ohc=hnpkjLdhxWIQ7kNvwESmlRY&_nc_oc=Ado8xUqlW2frxr1qbcy4f1rQ25SXzG_OBjusuJWTzIwK5Zs-L2Nz9WyS9sYXrxR6DXs&_nc_zt=23&_nc_ht=scontent-nrt1-1.cdninstagram.com&_nc_gid=MyOkmPuarKGq6LhjNoGfIw&_nc_ss=796a8&oh=00_AQNmRwWTp1xXcMwTKMYcGQqCOWbvSChURVoFDVk0z72JFQ&oe=6AD6BC4E';
-  const myNickname = '测试';
+  const myAvatarUrl = 'images/tanghao.jpg';
+  const myNickname = '♟️';
   const chatData = {
-    '测': {
-      avatar: 'https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/562009826_18087371101912276_4655210895562344551_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=105&ig_cache_key=MjgzMTMyMTQ2MjgyNTMxMzY0MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjc1MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=edTOXyNmOlIQ7kNvwF-ljGC&_nc_oc=Adr55p8Zslq4eHr7Iknf-f-beTPxYjVe5aYXUzjgdn4JYY4dJBnxzY9fWVEVFFMex_A&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=foRbjCK4_7Xn6a_FTU_wVQ&_nc_ss=796a8&oh=00_AQNj2H5cSNPOdQklu1IPF6O_kqfaz2E512kAAlGaxGaeHw&oe=6AD6CC7E',
-      isGroup: false,
-      messages: [
-        { type: 'left', text: 'nb' },
-        { type: 'right', text: '难绷啊' },
-        { type: 'time', text: '你撤回了一条消息' },
-        { type: 'right', text: '<img src=\"https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/567488147_18094752661693552_704052824392397211_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=111&ig_cache_key=MjgzMjY4NDIxODMyNDUzNTgyMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjc1MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=sxbrWdGEDnoQ7kNvwGUY-Ew&_nc_oc=AdqNhpy_EiNOpESD_CsMGWyVzaMQ0OLaRsVHhAaa_yDDjgihv_7I7TCNX-y1CGGypDU&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=foRbjCK4_7Xn6a_FTU_wVQ&_nc_ss=796a8&oh=00_AQO5fRPUaxpooeRhalwKke0c_W3ri38Q0DRbxl5aVvU6AQ&oe=6AD6C901\"max-width: 100px; border-radius: 6px;\">' }
-      ]
-    },
-    '班级群': {
-      avatar: 'https://scontent-nrt1-2.cdninstagram.com/v/t51.82787-15/569211430_18537055762019838_3234189589210615829_n.jpg?stp=dst-jpg_e35_p640x640_sh2.08_tt6&_nc_cat=107&ig_cache_key=MjYzOTgyODY4MTg1OTgzODA3MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IlNUT1JZLnhwaWRzLjEwODAuc2RyLnJlZ3VsYXJfcGhvdG8uQzMifQ%3D%3D&_nc_ohc=a9l3w6XlJksQ7kNvwE3GqIY&_nc_oc=Ado3gzncFPxDj4FqXYHh5kaUa6gyzG1yZX_U4gc1TpXz0_RGm0_oBFoTiFtLeRS5BKI&_nc_zt=23&_nc_ht=scontent-nrt1-2.cdninstagram.com&_nc_gid=U5aZGn3K4WH2Hno57tMl2A&_nc_ss=796a8&oh=00_AQM8XlucPQpwGDYMXvWWw9L6s1QydaEIgg8taQ_nyiTzvw&oe=6AD6CF0A',
+    '群聊（4）': {
+      avatar: 'images/tanghao.jpg',
       isGroup: true,
       messages: [
-        { type: 'left', sender: '1', text: '收到请回复' },
-        { type: 'left', sender: '2', text: '收到' }
+        { type: 'left', sender: '刘小别', text: '今晚选修课你们去上不？' },
+        { type: 'right', text: '你就爱上呗' },
+        { type: 'right', text: '就那么爱上' },
+        { type: 'left', sender: '刘小别', text: '不是' }
+      ]
+    },
+    '林': {
+      avatar: 'images/lin.png',
+      isGroup: false,
+      messages: [
+        { type: 'right', text: '25级机电三班应到29人实到29人' },
+        { type: 'left', text: '👌' },
+        { type: 'right', text: '25级机电三班应到29人实到15人，参与招新' },
+        { type: 'left', text: '👌' },
+        { type: 'right', text: '25级机电三班应到29人实到15人' },
+        { type: 'left', text: '👌' },
+        { type: 'time', text: '“林”撤回了一条消息' },
+        { type: 'left', text: '？' },
+        { type: 'left', text: '人呢' }
       ]
     }
   };
@@ -228,9 +247,18 @@
       const img = document.createElement('img');
       img.src = msg.type === 'right' ? myAvatarUrl : data.avatar;
       avatarDiv.appendChild(img);
+      
       const bubbleDiv = document.createElement('div');
-      bubbleDiv.className = 'msg ' + msg.type;
-      bubbleDiv.innerText = msg.text;
+      
+      // 自动识别是否为图片
+      if (msg.text && msg.text.includes('<img')) {
+        bubbleDiv.className = 'msg-image ' + msg.type;
+        bubbleDiv.innerHTML = msg.text;
+      } else {
+        bubbleDiv.className = 'msg ' + msg.type;
+        bubbleDiv.innerText = msg.text;
+      }
+
       if (data.isGroup && msg.type === 'left' && msg.sender) {
         const senderName = document.createElement('div');
         senderName.className = 'msg-sender-name';
@@ -251,25 +279,33 @@
   function closeChat() { document.getElementById('chatDetail').classList.remove('active'); }
   function openMoments() { document.getElementById('momentsView').classList.add('active'); }
   function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
+  
+  // 优化后的点赞逻辑
   function toggleLike(btn, listId) {
     const list = document.getElementById(listId);
     const isLiked = btn.classList.contains('liked');
     if (!isLiked) {
       btn.classList.add('liked'); btn.innerText = '❤️ 取消';
-      const myName = document.createElement('span');
-      myName.className = 'name liked-me'; myName.innerText = myNickname;
-      const existingNames = list.querySelectorAll('.name');
-      if (existingNames.length > 0) {
-        const sep = document.createElement('span');
-        sep.innerText = '、'; sep.className = 'liked-me-sep';
-        list.appendChild(sep);
+      const mySpan = document.createElement('span');
+      mySpan.className = 'name liked-me'; mySpan.innerText = myNickname;
+      
+      const icon = list.querySelector('.icon');
+      if (icon) {
+        list.insertBefore(mySpan, icon.nextSibling);
+        const remainingNames = list.querySelectorAll('.name:not(.liked-me)');
+        if (remainingNames.length > 0) {
+          const sep = document.createElement('span');
+          sep.innerText = '、'; sep.className = 'liked-me-sep';
+          list.insertBefore(sep, mySpan.nextSibling);
+        }
+      } else {
+        list.appendChild(mySpan);
       }
-      list.appendChild(myName);
     } else {
       btn.classList.remove('liked'); btn.innerText = '❤️ 赞';
-      const myName = list.querySelector('.liked-me');
+      const mySpan = list.querySelector('.liked-me');
       const sep = list.querySelector('.liked-me-sep');
-      if (myName) myName.remove(); if (sep) sep.remove();
+      if (mySpan) mySpan.remove(); if (sep) sep.remove();
     }
   }
 </script>
