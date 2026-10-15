@@ -97,16 +97,28 @@
 <body>
 <div class="phone">
   <div class="notch"></div>
-  <div class="status-bar"><span>13:33</span><span>📶 🔋</span></div>
+  <div class="status-bar"><span>16:57</span><span>📶 🔋</span></div>
   <div class="wechat-app">
     <div class="nav-header" id="mainHeader">微信(93)</div>
     <div class="main-content">
       <div class="tab-view active" id="tab-chats">
-        <div class="chat-item" onclick="openChat('群聊（4）')">
-          <div class="chat-avatar"><img src="images/tanghao.jpg" alt="群聊（4）"></div>
+        <div class="chat-item" onclick="openChat('导员')">
+          <div class="chat-avatar"><img src="images/lixun.png" alt="导员"></div>
           <div class="chat-info">
-            <div class="chat-name">群聊（4）</div>
-            <div class="chat-msg">刘小别: 不是</div>
+            <div class="chat-name">导员</div>
+            <div class="chat-msg">来我办公室一趟</div>
+          </div>
+          <div class="chat-meta">
+            <div class="chat-time">刚刚</div>
+            <div class="chat-badge">3</div>
+            <div class="chat-mute">🔕</div>
+          </div>
+        </div>
+        <div class="chat-item" onclick="openChat('张佳乐')">
+          <div class="chat-avatar"><img src="images/zhangjia.jpg" alt="张佳乐"></div>
+          <div class="chat-info">
+            <div class="chat-name">张佳乐</div>
+            <div class="chat-msg">真没用出去别说是我教的</div>
           </div>
           <div class="chat-meta">
             <div class="chat-time">刚刚</div>
@@ -114,21 +126,22 @@
             
           </div>
         </div>
-        <div class="chat-item" onclick="openChat('林')">
-          <div class="chat-avatar"><img src="images/lin.png" alt="林"></div>
+        <div class="chat-item" onclick="openChat('测')">
+          <div class="chat-avatar"><img src="images/2-7-q.jpeg" alt="测"></div>
           <div class="chat-info">
-            <div class="chat-name">林</div>
-            <div class="chat-msg">人呢</div>
+            <div class="chat-name">测</div>
+            <div class="chat-msg">1</div>
           </div>
           <div class="chat-meta">
-            <div class="chat-time">“林”撤回了一条消息</div>
+            <div class="chat-time">刚刚</div>
             
-            <div class="chat-mute">🔕</div>
+            
           </div>
         </div></div>
       <div class="tab-view" id="tab-contacts">
-        <div class="contact-item"><div class="contact-avatar"><img src="images/tanghao.jpg" alt="群聊（4）"></div> 群聊（4）</div>
-        <div class="contact-item"><div class="contact-avatar"><img src="images/lin.png" alt="林"></div> 林</div></div>
+        <div class="contact-item"><div class="contact-avatar"><img src="images/lixun.png" alt="导员"></div> 导员</div>
+        <div class="contact-item"><div class="contact-avatar"><img src="images/zhangjia.jpg" alt="张佳乐"></div> 张佳乐</div>
+        <div class="contact-item"><div class="contact-avatar"><img src="images/2-7-q.jpeg" alt="测"></div> 测</div></div>
       <div class="tab-view" id="tab-discover">
         <div class="discover-item" onclick="openMoments()">
           <div class="discover-icon">📷</div>
@@ -169,21 +182,40 @@
       </div>
       <div class="moments-body">
         <div class="moment-item">
-          <div class="moment-avatar"><img src="images/fangrui1.png" alt="方锐"></div>
+          <div class="moment-avatar"><img src="images/tanghao.jpg" alt="♟️"></div>
           <div class="moment-content">
-            <div class="moment-name">方锐</div>
-            <div class="moment-text">回家一趟把马桶盖子整碎了。。。</div>
+            <div class="moment-name">♟️</div>
+            <div class="moment-text">时间的参照物是什么呢</div>
             
             <div class="moment-footer">
               <span></span>
-              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792076153177')">❤️ 赞</span>
+              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792077370836')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
-              <div class="like-list" id="like-list-1792076153177"></div>
+              <div class="like-list" id="like-list-1792077370836"><span class="icon">❤️</span></div>
               
         <div class="comment-list">
-          <div class="comment-item"><span class="name">方锐</span><span class="content">：这个家已经留不住我了。。。。</span></div>
+          <div class="comment-item"><span class="name">孙翔</span><span class="content">：参照哥</span></div>
         </div>
+            </div>
+          </div>
+        </div>
+        <div class="moment-item">
+          <div class="moment-avatar"><img src="images/zhangjia.jpg" alt="张佳乐"></div>
+          <div class="moment-content">
+            <div class="moment-name">张佳乐</div>
+            <div class="moment-text">我写不动了测试一下</div>
+            
+        <div class="moment-images">
+          <img src="images/zhangjia.jpg" alt="">
+        </div>
+            <div class="moment-footer">
+              <span>刚刚</span>
+              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792077595625')">❤️ 赞</span>
+            </div>
+            <div class="moments-interaction">
+              <div class="like-list" id="like-list-1792077595625"><span class="icon">❤️</span></div>
+              
             </div>
           </div>
         </div></div>
@@ -194,29 +226,39 @@
   const myAvatarUrl = 'images/tanghao.jpg';
   const myNickname = '♟️';
   const chatData = {
-    '群聊（4）': {
-      avatar: 'images/tanghao.jpg',
-      isGroup: true,
-      messages: [
-        { type: 'left', sender: '刘小别', text: '今晚选修课你们去上不？' },
-        { type: 'right', text: '你就爱上呗' },
-        { type: 'right', text: '就那么爱上' },
-        { type: 'left', sender: '刘小别', text: '不是' }
-      ]
-    },
-    '林': {
-      avatar: 'images/lin.png',
+    '导员': {
+      avatar: 'images/lixun.png',
       isGroup: false,
       messages: [
-        { type: 'right', text: '25级机电三班应到29人实到29人' },
-        { type: 'left', text: '👌' },
-        { type: 'right', text: '25级机电三班应到29人实到15人，参与招新' },
-        { type: 'left', text: '👌' },
-        { type: 'right', text: '25级机电三班应到29人实到15人' },
-        { type: 'left', text: '👌' },
-        { type: 'time', text: '“林”撤回了一条消息' },
-        { type: 'left', text: '？' },
-        { type: 'left', text: '人呢' }
+        { type: 'right', text: '经过认真思考，我个人这边时间协调不过来，担心没办法尽责做好工作，想申请辞去助导，相关交接我会配合<br>/需要我帮你精简成一段可以直接复制粘贴的成品吗？' },
+        { type: 'time', text: '你撤回了一条消息' },
+        { type: 'right', text: '经过认真思考，我个人这边时间协调不过来，担心没办法尽责做好工作，想申请辞去助导，相关交接我会配合<br>' },
+        { type: 'left', text: '（60s语音）' },
+        { type: 'left', text: '唐昊啊这不是我说你啊，你之前刚加入学生会的时候也就去年吧，你刚加没多久，你就说你要退出来呀，然后那个学生会退出的都要写3000字退部申请的。还不是我去帮你周旋的，你说是不是，啊，然后刚干这个助导没个一周你又撂子不干了，你这个人不可以这样子的【然后省略很多废话】' },
+        { type: 'left', text: '知道吗' },
+        { type: 'time', text: '16:57' },
+        { type: 'left', text: '来我办公室一趟' }
+      ]
+    },
+    '张佳乐': {
+      avatar: 'images/zhangjia.jpg',
+      isGroup: false,
+      messages: [
+        { type: 'right', text: '倒霉起喝凉水都塞牙' },
+        { type: 'right', text: '葡萄酒品鉴那老头今天点名了' },
+        { type: 'right', text: '谁刺激他了' },
+        { type: 'left', text: '下午没喝美呗就点名了' }
+      ]
+    },
+    '测': {
+      avatar: 'images/2-7-q.jpeg',
+      isGroup: true,
+      messages: [
+        { type: 'left', sender: '1', text: '1' },
+        { type: 'left', sender: '2', text: '2' },
+        { type: 'left', sender: '3', text: '3' },
+        { type: 'time', text: '15:57' },
+        { type: 'right', text: '1' }
       ]
     }
   };
@@ -280,7 +322,7 @@
   function openMoments() { document.getElementById('momentsView').classList.add('active'); }
   function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
   
-  // 优化后的点赞逻辑
+  // 终极点赞逻辑
   function toggleLike(btn, listId) {
     const list = document.getElementById(listId);
     const isLiked = btn.classList.contains('liked');
@@ -291,9 +333,9 @@
       
       const icon = list.querySelector('.icon');
       if (icon) {
+        const hasOtherNames = list.querySelectorAll('.name:not(.liked-me)').length > 0;
         list.insertBefore(mySpan, icon.nextSibling);
-        const remainingNames = list.querySelectorAll('.name:not(.liked-me)');
-        if (remainingNames.length > 0) {
+        if (hasOtherNames) {
           const sep = document.createElement('span');
           sep.innerText = '、'; sep.className = 'liked-me-sep';
           list.insertBefore(sep, mySpan.nextSibling);
@@ -305,7 +347,8 @@
       btn.classList.remove('liked'); btn.innerText = '❤️ 赞';
       const mySpan = list.querySelector('.liked-me');
       const sep = list.querySelector('.liked-me-sep');
-      if (mySpan) mySpan.remove(); if (sep) sep.remove();
+      if (mySpan) mySpan.remove(); 
+      if (sep) sep.remove();
     }
   }
 </script>
