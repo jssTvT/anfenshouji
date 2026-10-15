@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高仿微信生成器 - 终极完美版</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "PingFang SC", sans-serif; background: #f5f5f5; padding: 20px; padding-bottom: 80px; }
+  .container { max-width: 800px; margin: 0 auto; }
+  .card { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+  h1 { font-size: 24px; text-align: center; margin-bottom: 20px; color: #07c160; }
+  h2 { font-size: 16px; margin-bottom: 15px; color: #333; border-left: 4px solid #07c160; padding-left: 10px; }
+  .field { margin-bottom: 15px; }
+  .field label { display: block; font-size: 13px; color: #666; margin-bottom: 5px; }
+  .field input, .field textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit; }
+  .field textarea { resize: vertical; min-height: 40px; max-height: 150px; }
+  .btn { display: inline-block; padding: 10px 20px; background: #07c160; color: #fff; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; transition: opacity 0.2s; }
+  .btn:hover { opacity: 0.9; }
+  .btn.blue { background: #3498db; }
+  .btn.red { background: #e74c3c; }
+  .btn.small { padding: 5px 10px; font-size: 12px; }
+  .list-item { border: 1px solid #eee; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fafafa; position: relative; transition: all 0.2s; }
+  .list-item.dragging { opacity: 0.5; border: 1px dashed #07c160; }
+  .list-item.drag-over { border: 1px solid #07c160; background: #f0fff4; }
+  .drag-handle { display: flex; align-items: center; justify-content: center; background: #e8e8e8; color: #666; padding: 6px 0; margin-bottom: 10px; border-radius: 4px; cursor: grab; font-size: 13px; user-select: none; }
+  .drag-handle:active { cursor: grabbing; background: #ddd; }
+  .drag-handle span { margin-right: 5px; font-size: 16px; }
+  .list-item .remove { position: absolute; top: 10px; right: 10px; z-index: 10; }
+  .row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; }
+  .row select { width: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; }
+  .row input { flex: 1; min-width: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; }
+  .row textarea { flex: 1; min-width: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; min-height: 40px; resize: vertical; }
+  .output { margin-top: 20px; padding: 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: none; }
+  .output textarea { width: 100%; height: 250px; padding: 10px; font-family: monospace; font-size: 12px; border: 1px solid #ddd; border-radius: 6px; }
+  .actions { margin-top: 10px; display: flex; gap: 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📱 高仿微信生成器 (终极完美版)</h1>
+
+  <div class="card">
+    <h2>👤 手机主人信息</h2>
+    <div class="field">
+      <label>你的微信昵称（点赞时显示在最前面）</label>
+      <input type="text" id="myNickname" value="小魔女大爆炸" placeholder="请输入昵称">
+    </div>
+    <div class="field">
+      <label>你的微信号（个人主页显示）</label>
+      <input type="text" id="myWechatId" value="wxid_123456" placeholder="请输入微信号">
+    </div>
+    <div class="field">
+      <label>你的头像路径（图片链接或本地路径）</label>
+      <input type="text" id="myAvatar" value="images/dai.png" placeholder="images/dai.png 或 https://...">
+    </div>
+    <div class="field">
+      <label>手机左上角系统时间（例如：13:33）</label>
+      <input type="text" id="systemTime" value="13:33">
+    </div>
+    <div class="field">
+      <label>朋友圈背景图路径</label>
+      <input type="text" id="momentsBg" value="images/bg.jpg">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>💬 联系人与聊天</h2>
+    <div id="contactList"></div>
+    <button class="btn" onclick="addContact()">+ 添加联系人/群聊</button>
+  </div>
+
+  <div class="card">
+    <h2>📷 朋友圈动态</h2>
+    <div id="momentList"></div>
+    <button class="btn blue" onclick="addMoment()">+ 添加朋友圈</button>
+  </div>
+
+  <div style="text-align: center; margin-top: 30px;">
+    <button class="btn" style="padding: 15px 50px; font-size: 18px;" onclick="generateHTML()">🚀 生成 HTML 文件</button>
+  </div>
+
+  <div class="output" id="output">
+    <h2>🎉 生成成功！</h2>
+    <textarea id="outputCode" readonly></textarea>
+    <div class="actions">
+      <button class="btn" onclick="downloadFile()">📥 下载文件</button>
+      <button class="btn blue" onclick="copyCode()">📋 复制代码</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let contacts = [];
+  let moments = [];
+  let draggedContactId = null;
+  let draggedMomentId = null;
+
+  // --- 联系人操作 ---
+  function addContact() {
+    const id = Date.now();
+    contacts.push({ id, name: '', avatar: '', isGroup: false, preview: '', listTime: '刚刚', unread: 0, isMuted: false, messages: [] });
+    renderContacts();
+  }
+
+  function removeContact(id) {
+    contacts = contacts.filter(c => c.id !== id);
+    renderContacts();
+  }
+
+  function updateContact(id, field, value) {
+    const c = contacts.find(c => c.id === id);
+    if (c) c[field] = value;
+    if (field === 'isGroup') renderContacts();
+  }
+
+  function addMessage(contactId) {
+    const c = contacts.find(c => c.id === contactId);
+    if (c) {
+      c.messages.push({ type: 'left', sender: '', senderAvatar: '', text: '' });
+      renderContacts();
+    }
+  }
+
+  function removeMessage(contactId, idx) {
+    const c = contacts.find(c => c.id === contactId);
+    if (c) { c.messages.splice(idx, 1); renderContacts(); }
+  }
+
+  function updateMessage(contactId, idx, field, value) {
+    const c = contacts.find(c => c.id === contactId);
+    if (c && c.messages[idx]) c.messages[idx][field] = value;
+    if (field === 'type') renderContacts();
+  }
+
+  // --- 联系人拖拽逻辑 ---
+  function handleContactDragStart(e, id) {
+    draggedContactId = id;
+    e.currentTarget.closest('.list-item').classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  function handleContactDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drag-over');
+  }
+
+  function handleContactDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+
+  function handleContactDrop(e, targetId) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+    if (draggedContactId === targetId) return;
+    
+    const dragIndex = contacts.findIndex(c => c.id === draggedContactId);
+    const dropIndex = contacts.findIndex(c => c.id === targetId);
+    
+    if (dragIndex !== -1 && dropIndex !== -1) {
+      const [draggedItem] = contacts.splice(dragIndex, 1);
+      contacts.splice(dropIndex, 0, draggedItem);
+      renderContacts();
+    }
+    draggedContactId = null;
+  }
+
+  function renderContacts() {
+    const box = document.getElementById('contactList');
+    if (contacts.length === 0) { box.innerHTML = '<p style="color:#999;">暂无联系人</p>'; return; }
+    
+    box.innerHTML = contacts.map(c => `
+      <div class="list-item" ondragover="handleContactDragOver(event)" ondragleave="handleContactDragLeave(event)" ondrop="handleContactDrop(event, ${c.id})">
+        <div class="drag-handle" draggable="true" ondragstart="handleContactDragStart(event, ${c.id})">
+          <span>☰</span> 按住拖动排序
+        </div>
+        <button class="btn red small remove" onclick="removeContact(${c.id})">删除</button>
+        <div class="field">
+          <label>名字（显示在列表）</label>
+          <input type="text" value="${c.name}" oninput="updateContact(${c.id}, 'name', this.value)" placeholder="例如：张佳乐">
+        </div>
+        <div class="field">
+          <label>群聊/联系人头像路径</label>
+          <input type="text" value="${c.avatar}" oninput="updateContact(${c.id}, 'avatar', this.value)" placeholder="images/zhangjia.jpg">
+        </div>
+        <div class="field">
+          <label>消息预览文字（留空则自动抓取最后一条）</label>
+          <input type="text" value="${c.preview}" oninput="updateContact(${c.id}, 'preview', this.value)" placeholder="留空自动抓取最后一条消息">
+        </div>
+        <div class="field">
+          <label>列表显示时间（显示在列表右侧，例如：刚刚、上午09:42、昨天）</label>
+          <input type="text" value="${c.listTime || '刚刚'}" oninput="updateContact(${c.id}, 'listTime', this.value)" placeholder="刚刚">
+        </div>
+        <div class="field" style="display:flex; align-items:center; gap:10px;">
+          <label style="margin:0;">是否群聊</label>
+          <input type="checkbox" ${c.isGroup ? 'checked' : ''} onchange="updateContact(${c.id}, 'isGroup', this.checked)">
+        </div>
+        <div class="field" style="display:flex; gap:10px;">
+          <div style="flex:1;">
+            <label>未读消息数（0代表不显示红点）</label>
+            <input type="number" value="${c.unread || 0}" oninput="updateContact(${c.id}, 'unread', parseInt(this.value) || 0)">
+          </div>
+          <div style="flex:1; display:flex; align-items:center; gap:10px; padding-top:20px;">
+            <label style="margin:0;">免打扰</label>
+            <input type="checkbox" ${c.isMuted ? 'checked' : ''} onchange="updateContact(${c.id}, 'isMuted', this.checked)">
+          </div>
+        </div>
+        <div class="field">
+          <label>聊天记录（支持直接敲回车换行，也支持图片代码）</label>
+          ${c.messages.map((m, i) => `
+            <div class="row">
+              <select onchange="updateMessage(${c.id}, ${i}, 'type', this.value)">
+                <option value="left" ${m.type === 'left' ? 'selected' : ''}>对方</option>
+                <option value="right" ${m.type === 'right' ? 'selected' : ''}>自己</option>
+                <option value="time" ${m.type === 'time' ? 'selected' : ''}>时间</option>
+              </select>
+              ${c.isGroup && m.type === 'left' ? `
+                <input type="text" style="width:70px;" placeholder="发送者" value="${m.sender || ''}" oninput="updateMessage(${c.id}, ${i}, 'sender', this.value)">
+                <input type="text" style="width:70px;" placeholder="头像路径" value="${m.senderAvatar || ''}" oninput="updateMessage(${c.id}, ${i}, 'senderAvatar', this.value)">
+              ` : ''}
+              <textarea placeholder="消息内容（敲回车直接换行）" oninput="updateMessage(${c.id}, ${i}, 'text', this.value)">${m.text}</textarea>
+              <button class="btn red small" onclick="removeMessage(${c.id}, ${i})">×</button>
+            </div>
+          `).join('')}
+          <button class="btn small" style="margin-top:8px;" onclick="addMessage(${c.id})">+ 添加消息</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // --- 朋友圈操作 ---
+  function addMoment() {
+    const id = Date.now();
+    moments.push({ id, name: '', avatar: '', text: '', images: [], time: '', likes: '', comments: '' });
+    renderMoments();
+  }
+
+  function removeMoment(id) {
+    moments = moments.filter(m => m.id !== id);
+    renderMoments();
+  }
+
+  function updateMoment(id, field, value) {
+    const m = moments.find(m => m.id === id);
+    if (m) m[field] = value;
+  }
+
+  // --- 朋友圈拖拽逻辑 ---
+  function handleMomentDragStart(e, id) {
+    draggedMomentId = id;
+    e.currentTarget.closest('.list-item').classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  function handleMomentDragOver(e) {
+    e.preventDefault();
+    e.currentTarget.classList.add('drag-over');
+  }
+
+  function handleMomentDragLeave(e) {
+    e.currentTarget.classList.remove('drag-over');
+  }
+
+  function handleMomentDrop(e, targetId) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+    if (draggedMomentId === targetId) return;
+
+    const dragIndex = moments.findIndex(m => m.id === draggedMomentId);
+    const dropIndex = moments.findIndex(m => m.id === targetId);
+
+    if (dragIndex !== -1 && dropIndex !== -1) {
+      const [draggedItem] = moments.splice(dragIndex, 1);
+      moments.splice(dropIndex, 0, draggedItem);
+      renderMoments();
+    }
+    draggedMomentId = null;
+  }
+
+  function renderMoments() {
+    const box = document.getElementById('momentList');
+    if (moments.length === 0) { box.innerHTML = '<p style="color:#999;">暂无朋友圈</p>'; return; }
+    
+    box.innerHTML = moments.map(m => `
+      <div class="list-item" ondragover="handleMomentDragOver(event)" ondragleave="handleMomentDragLeave(event)" ondrop="handleMomentDrop(event, ${m.id})">
+        <div class="drag-handle" draggable="true" ondragstart="handleMomentDragStart(event, ${m.id})">
+          <span>☰</span> 按住拖动排序
+        </div>
+        <button class="btn red small remove" onclick="removeMoment(${m.id})">删除</button>
+        <div class="field">
+          <label>发布人名字</label>
+          <input type="text" value="${m.name}" oninput="updateMoment(${m.id}, 'name', this.value)" placeholder="张佳乐">
+        </div>
+        <div class="field">
+          <label>发布人头像路径</label>
+          <input type="text" value="${m.avatar}" oninput="updateMoment(${m.id}, 'avatar', this.value)" placeholder="images/zhangjia.jpg">
+        </div>
+        <div class="field">
+          <label>正文内容</label>
+          <textarea oninput="updateMoment(${m.id}, 'text', this.value)" placeholder="今天的排练很顺利！">${m.text}</textarea>
+        </div>
+        <div class="field">
+          <label>配图路径（逗号分隔，最多3张，英文逗号）</label>
+          <input type="text" value="${m.images.join(',')}" oninput="updateMoment(${m.id}, 'images', this.value.split(','))" placeholder="images/img1.jpg,images/img2.jpg">
+        </div>
+        <div class="field">
+          <label>发布时间</label>
+          <input type="text" value="${m.time}" oninput="updateMoment(${m.id}, 'time', this.value)" placeholder="刚刚">
+        </div>
+        <div class="field">
+          <label>点赞人（用中文顿号分隔，如：楚姐、张佳乐）</label>
+          <input type="text" value="${m.likes}" oninput="updateMoment(${m.id}, 'likes', this.value)" placeholder="楚姐、张佳乐">
+        </div>
+        <div class="field">
+          <label>评论 <span style="color:#e74c3c; font-weight:bold;">（必须使用英文冒号分隔名字和内容，多条用英文分号 ; 隔开）</span></label>
+          <input type="text" value="${m.comments}" oninput="updateMoment(${m.id}, 'comments', this.value)" placeholder="楚姐:好耶！;张佳乐:回复 楚姐：没问题！">
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // --- 生成逻辑 ---
+  function generateHTML() {
+    const myNickname = document.getElementById('myNickname').value || '我';
+    const myWechatId = document.getElementById('myWechatId').value || 'wxid_default';
+    const myAvatar = document.getElementById('myAvatar').value || 'images/dai.png';
+    const momentsBg = document.getElementById('momentsBg').value || 'images/bg.jpg';
+    const systemTime = document.getElementById('systemTime').value || '13:33';
+
+    const chatDataStr = contacts.filter(c => c.name).map(c => {
+      const msgs = c.messages.map(m => {
+        if (m.type === 'time') return `{ type: 'time', text: '${escapeStr(m.text)}' }`;
+        
+        // 核心换行处理：把用户输入的回车替换为 <br>
+        const finalText = (m.text || '').replace(/\n/g, '<br>');
+        
+        if (c.isGroup && m.type === 'left') {
+          return `{ type: 'left', sender: '${escapeStr(m.sender)}', senderAvatar: '${escapeStr(m.senderAvatar)}', text: '${escapeStr(finalText)}' }`;
+        }
+        return `{ type: '${m.type}', text: '${escapeStr(finalText)}' }`;
+      }).join(',\n        ');
+      return `'${c.name}': {\n      avatar: '${c.avatar}',\n      isGroup: ${c.isGroup},\n      messages: [\n        ${msgs}\n      ]\n    }`;
+    }).join(',\n    ');
+
+    // 聊天列表 HTML
+    const contactListHtml = contacts.filter(c => c.name).map(c => {
+      // 免打扰逻辑：如果开启了免打扰，未读消息显示为红点，否则显示数字气泡
+      let badgeHtml = '';
+      if (c.unread > 0) {
+        if (c.isMuted) {
+          badgeHtml = `<div class="chat-badge-red-dot"></div>`;
+        } else {
+          badgeHtml = `<div class="chat-badge">${c.unread}</div>`;
+        }
+      }
+      const muteHtml = c.isMuted ? `<div class="chat-mute">🔕</div>` : '';
+      
+      let previewText = c.preview;
+      if (!previewText || previewText.trim() === '') {
+        let lastMsg = '暂无消息';
+        if (c.messages && c.messages.length > 0) {
+          for (let i = c.messages.length - 1; i >= 0; i--) {
+            const msg = c.messages[i];
+            if (msg.type !== 'time') {
+              let text = msg.text || '';
+              if (text.includes('<img')) text = '[图片]';
+              text = text.replace(/<br\s*\/?>/gi, ' ').replace(/\n/g, ' ');
+              if (c.isGroup && msg.type === 'left' && msg.sender) {
+                text = msg.sender + ': ' + text;
+              }
+              lastMsg = text;
+              break;
+            }
+          }
+        }
+        previewText = lastMsg;
+      }
+
+      const listTime = c.listTime && c.listTime.trim() !== '' ? c.listTime : '刚刚';
+
+      return `
+        <div class="chat-item" onclick="openChat('${c.name}')">
+          <div class="chat-avatar"><img src="${c.avatar}" alt="${c.name}"></div>
+          <div class="chat-info">
+            <div class="chat-name">${c.name}</div>
+            <div class="chat-msg">${previewText}</div>
+          </div>
+          <div class="chat-meta">
+            <div class="chat-time">${listTime}</div>
+            ${badgeHtml}
+            ${muteHtml}
+          </div>
+        </div>`;
+    }).join('');
+
+    const momentsHtml = moments.map(m => {
+      const imgsHtml = m.images.filter(Boolean).length > 0 ? `
+        <div class="moment-images">
+          ${m.images.filter(Boolean).map(img => `<img src="${img}" alt="">`).join('')}
+        </div>` : '';
+      
+      const likesHtml = m.likes ? `<div class="like-list"><span class="icon">❤️</span>${m.likes.split(/[、,，]/).filter(Boolean).map(n => `<span class="name">${n}</span>`).join('、')}</div>` : `<div class="like-list"><span class="icon">❤️</span></div>`;
+      
+      const commentsHtml = m.comments ? `
+        <div class="comment-list">
+          ${m.comments.split(';').filter(Boolean).map(c => {
+            const parts = c.split(':');
+            if (parts.length < 2) return '';
+            const name = parts[0];
+            const content = parts.slice(1).join(':');
+            return `<div class="comment-item"><span class="name">${name}</span><span class="content">：${content}</span></div>`;
+          }).join('')}
+        </div>` : '';
+
+      return `
+        <div class="moment-item">
+          <div class="moment-avatar"><img src="${m.avatar}" alt="${m.name}"></div>
+          <div class="moment-content">
+            <div class="moment-name">${m.name}</div>
+            <div class="moment-text">${m.text}</div>
+            ${imgsHtml}
+            <div class="moment-footer">
+              <span>${m.time}</span>
+              <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-${m.id}')">❤️ 赞</span>
+            </div>
+            <div class="moments-interaction">
+              <div class="like-list" id="like-list-${m.id}">${likesHtml ? likesHtml.replace('<div class="like-list">','').replace('</div>','') : ''}</div>
+              ${commentsHtml}
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    const contactsListHtml = contacts.filter(c => c.name).map(c => `
+        <div class="contact-item"><div class="contact-avatar"><img src="${c.avatar}" alt="${c.name}"></div> ${c.name}</div>`).join('');
+
+    const fullHtml = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>${myNickname}的微信</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
+  body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  .phone { width: 375px; height: 812px; background: #ededed; border-radius: 45px; border: 10px solid #2c2c2e; position: relative; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.9); }
+  .notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 140px; height: 30px; background: #000; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; z-index: 1000; }
+  .status-bar { position: absolute; top: 0; left: 0; width: 100%; padding: 15px 25px; display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; color: #000; z-index: 999; }
+  .wechat-app { width: 100%; height: 100%; display: flex; flex-direction: column; position: absolute; top: 0; left: 0; }
+  .nav-header { padding: 50px 15px 15px; background: #ededed; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 17px; position: relative; }
+  .nav-header .back-btn { position: absolute; left: 15px; bottom: 15px; cursor: pointer; color: #000; font-size: 16px; display: flex; align-items: center; }
+  .nav-header .back-btn::before { content: "‹"; font-size: 28px; margin-right: 2px; line-height: 1; }
+  .main-content { flex: 1; overflow-y: auto; position: relative; }
+  .tab-view { display: none; height: 100%; overflow-y: auto; padding-bottom: 60px; }
+  .tab-view.active { display: block; }
+  .chat-item { display: flex; align-items: center; padding: 12px 15px; background: #ededed; border-bottom: 1px solid #e0e0e0; cursor: pointer; }
+  .chat-item:active { background: #ddd; }
+  .chat-avatar { width: 48px; height: 48px; border-radius: 6px; background: #ccc; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 18px; font-weight: bold; flex-shrink: 0; position: relative; overflow: hidden; }
+  .chat-avatar img { width: 100%; height: 100%; border-radius: 6px; object-fit: cover; }
+  .chat-info { flex: 1; overflow: hidden; }
+  .chat-name { font-size: 16px; color: #000; margin-bottom: 4px; font-weight: 500; }
+  .chat-msg { color: #888; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .chat-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .chat-time { font-size: 12px; color: #aaa; }
+  .chat-badge { background: #ff3b30; color: #fff; font-size: 11px; min-width: 18px; height: 18px; border-radius: 9px; display: flex; justify-content: center; align-items: center; padding: 0 4px; }
+  .chat-badge-red-dot { width: 8px; height: 8px; background: #ff3b30; border-radius: 50%; margin-top: 4px; }
+  .chat-mute { font-size: 14px; color: #b3b3b3; }
+  .contact-item { display: flex; align-items: center; padding: 15px; background: #fff; border-bottom: 1px solid #f0f0f0; }
+  .contact-avatar { width: 40px; height: 40px; border-radius: 4px; background: #07c160; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; font-size: 16px; overflow: hidden; }
+  .contact-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .discover-item { display: flex; align-items: center; padding: 15px; background: #fff; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+  .discover-item:active { background: #f0f0f0; }
+  .discover-icon { width: 30px; height: 30px; margin-right: 12px; display: flex; justify-content: center; align-items: center; font-size: 20px; }
+  .discover-text { flex: 1; font-size: 16px; color: #000; }
+  .discover-arrow { color: #ccc; font-size: 18px; }
+  .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: #f7f7f7; border-top: 1px solid #ddd; display: flex; justify-content: space-around; align-items: center; z-index: 100; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; color: #888; font-size: 10px; flex: 1; padding: 5px 0; position: relative; }
+  .nav-item.active { color: #07c160; }
+  .nav-item .nav-icon { font-size: 22px; margin-bottom: 2px; }
+  .chat-detail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ededed; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; z-index: 200; }
+  .chat-detail.active { transform: translateX(0); }
+  .msg-area { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+  .msg-row { display: flex; align-items: flex-start; }
+  .msg-row.left { justify-content: flex-start; }
+  .msg-row.right { justify-content: flex-end; }
+  .msg-avatar { width: 40px; height: 40px; border-radius: 4px; overflow: hidden; flex-shrink: 0; background: #ccc; }
+  .msg-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .msg-row.left .msg-avatar { margin-right: 10px; }
+  .msg-row.right .msg-avatar { margin-left: 10px; }
+  .msg { max-width: calc(100% - 100px); padding: 10px 15px; border-radius: 6px; font-size: 15px; line-height: 1.4; word-wrap: break-word; position: relative; }
+  .msg.left { background: #fff; }
+  .msg.left::before { content: ""; position: absolute; left: -6px; top: 12px; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-right: 6px solid #fff; }
+  .msg.right { background: #95ec69; }
+  .msg.right::after { content: ""; position: absolute; right: -6px; top: 12px; width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 6px solid #95ec69; }
+  .msg-image { max-width: 60%; margin-bottom: 10px; display: flex; align-items: flex-end; }
+  .msg-image img { max-width: 100%; border-radius: 8px; display: block; }
+  .msg-image.left { align-self: flex-start; margin-left: 10px; }
+  .msg-image.right { align-self: flex-end; margin-right: 10px; }
+  .msg-time { text-align: center; font-size: 12px; color: #b2b2b2; margin: 15px 0; width: 100%; display: block; }
+  .msg-sender-name { font-size: 12px; color: #888; margin-bottom: 4px; margin-left: 5px; display: block; }
+  .msg-content-wrapper { flex: 1; min-width: 0; display: flex; flex-direction: column; max-width: 85%; }
+  .chat-input-area { flex-shrink: 0; padding: 10px 15px; background: #f7f7f7; border-top: 1px solid #ddd; }
+  .chat-input-area input { width: 100%; padding: 10px 15px; border-radius: 6px; border: 1px solid #ddd; outline: none; font-size: 15px; }
+  .moments-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; z-index: 300; }
+  .moments-view.active { transform: translateX(0); }
+  .moments-header { position: relative; height: 250px; background: url('${momentsBg}') center/cover no-repeat; background-color: #667eea; }
+  .moments-header .back-btn { position: absolute; top: 55px; left: 15px; color: #fff; cursor: pointer; font-size: 16px; display: flex; align-items: center; z-index: 10; text-shadow: 0 1px 3px #000; }
+  .moments-header .back-btn::before { content: "‹"; font-size: 28px; margin-right: 2px; line-height: 1; }
+  .moments-header .user-info { position: absolute; bottom: 20px; right: 20px; display: flex; align-items: center; color: #fff; text-shadow: 0 1px 3px #000; }
+  .moments-header .user-info img { width: 60px; height: 60px; border-radius: 6px; border: 2px solid #fff; margin-left: 10px; object-fit: cover; }
+  .moments-body { flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 80px; }
+  .moment-item { display: flex; margin-bottom: 25px; }
+  .moment-avatar { width: 40px; height: 40px; border-radius: 4px; background: #07c160; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; flex-shrink: 0; overflow: hidden; }
+  .moment-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .moment-content { flex: 1; }
+  .moment-name { color: #576b95; font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .moment-text { font-size: 15px; color: #000; margin-bottom: 8px; line-height: 1.4; }
+  .moment-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 8px; }
+  .moment-images img { width: 100%; height: 100px; object-fit: cover; border-radius: 4px; }
+  .moment-footer { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #888; }
+  .moment-like-btn { cursor: pointer; color: #576b95; }
+  .moments-interaction { background: #f7f7f7; border-radius: 4px; padding: 8px 10px; margin-top: 8px; font-size: 13px; position: relative; }
+  .moments-interaction::before { content: ""; position: absolute; top: -6px; left: 15px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #f7f7f7; }
+  .like-list { color: #576b95; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 6px; }
+  .like-list .icon { color: #576b95; margin-right: 4px; font-size: 14px; }
+  .like-list .name { color: #576b95; font-weight: 600; }
+  .comment-list { border-top: 1px solid #e5e5e5; padding-top: 6px; }
+  .comment-item { margin-bottom: 4px; line-height: 1.4; }
+  .comment-item:last-child { margin-bottom: 0; }
+  .comment-item .name { color: #576b95; font-weight: 600; }
+  .comment-item .content { color: #333; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="status-bar"><span>${systemTime}</span><span>📶 🔋</span></div>
+  <div class="wechat-app">
+    <div class="nav-header" id="mainHeader">微信(93)</div>
+    <div class="main-content">
+      <div class="tab-view active" id="tab-chats">${contactListHtml}</div>
+      <div class="tab-view" id="tab-contacts">${contactsListHtml}</div>
+      <div class="tab-view" id="tab-discover">
+        <div class="discover-item" onclick="openMoments()">
+          <div class="discover-icon">📷</div>
+          <div class="discover-text">朋友圈</div>
+          <div class="discover-arrow">›</div>
+        </div>
+        <div class="discover-item"><div class="discover-icon">📺</div><div class="discover-text">视频号</div><div class="discover-arrow">›</div></div>
+        <div class="discover-item"><div class="discover-icon">🔍</div><div class="discover-text">扫一扫</div><div class="discover-arrow">›</div></div>
+      </div>
+      <div class="tab-view" id="tab-me">
+        <div style="padding: 30px; text-align: center; background: #fff;">
+          <div style="width: 70px; height: 70px; border-radius: 8px; margin: 0 auto 10px; overflow: hidden;">
+            <img src="${myAvatar}" alt="${myNickname}" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div style="font-weight: bold; font-size: 18px;">${myNickname}</div>
+          <div style="color: #888; font-size: 13px; margin-top: 5px;">微信号：${myWechatId}</div>
+        </div>
+        <div class="discover-item"><div class="discover-icon">⭐</div><div class="discover-text">收藏</div><div class="discover-arrow">›</div></div>
+        <div class="discover-item"><div class="discover-icon">🖼️</div><div class="discover-text">相册</div><div class="discover-arrow">›</div></div>
+        <div class="discover-item"><div class="discover-icon">⚙️</div><div class="discover-text">设置</div><div class="discover-arrow">›</div></div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item active" onclick="switchTab('tab-chats', '微信(93)')"><span class="nav-icon">💬</span>微信</div>
+      <div class="nav-item" onclick="switchTab('tab-contacts', '通讯录')"><span class="nav-icon">👥</span>通讯录</div>
+      <div class="nav-item" onclick="switchTab('tab-discover', '发现')"><span class="nav-icon">🧭</span>发现</div>
+      <div class="nav-item" onclick="switchTab('tab-me', '我')"><span class="nav-icon">👤</span>我</div>
+    </div>
+    <div class="chat-detail" id="chatDetail">
+      <div class="nav-header"><div class="back-btn" onclick="closeChat()">返回</div><span id="chatTitle">聊天</span></div>
+      <div class="msg-area" id="msgArea"></div>
+      <div class="chat-input-area"><input type="text" placeholder="输入消息..."></div>
+    </div>
+    <div class="moments-view" id="momentsView">
+      <div class="moments-header">
+        <div class="back-btn" onclick="closeMoments()">返回</div>
+        <div class="user-info"><span>${myNickname}</span><img src="${myAvatar}" alt="头像"></div>
+      </div>
+      <div class="moments-body">${momentsHtml}</div>
+    </div>
+  </div>
+</div>
+<script>
+  const myAvatarUrl = '${myAvatar}';
+  const myNickname = '${myNickname}';
+  const chatData = {
+    ${chatDataStr}
+  };
+  function switchTab(tabId, title) {
+    document.querySelectorAll('.tab-view').forEach(tab => tab.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    document.getElementById('mainHeader').innerText = title;
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    closeChat(); closeMoments();
+  }
+  function openChat(name) {
+    document.getElementById('chatTitle').innerText = name;
+    const msgArea = document.getElementById('msgArea');
+    msgArea.innerHTML = '';
+    const data = chatData[name];
+    if (!data) return;
+    data.messages.forEach(msg => {
+      if (msg.type === 'time') {
+        const timeDiv = document.createElement('div');
+        timeDiv.className = 'msg-time'; timeDiv.innerText = msg.text;
+        msgArea.appendChild(timeDiv); return;
+      }
+      const rowDiv = document.createElement('div');
+      rowDiv.className = 'msg-row ' + msg.type;
+      const avatarDiv = document.createElement('div');
+      avatarDiv.className = 'msg-avatar';
+      const img = document.createElement('img');
+      if (msg.type === 'right') {
+        img.src = myAvatarUrl;
+      } else if (msg.senderAvatar && msg.senderAvatar.trim() !== '') {
+        img.src = msg.senderAvatar;
+      } else {
+        img.src = data.avatar;
+      }
+      avatarDiv.appendChild(img);
+      
+      const bubbleDiv = document.createElement('div');
+      if (msg.text && msg.text.includes('<img')) {
+        bubbleDiv.className = 'msg-image ' + msg.type;
+        bubbleDiv.innerHTML = msg.text;
+      } else {
+        bubbleDiv.className = 'msg ' + msg.type;
+        if (msg.text && (msg.text.includes('<br>') || msg.text.includes('<br/>'))) {
+          bubbleDiv.innerHTML = msg.text;
+        } else {
+          bubbleDiv.innerText = msg.text;
+        }
+      }
+
+      if (data.isGroup && msg.type === 'left' && msg.sender) {
+        const senderName = document.createElement('div');
+        senderName.className = 'msg-sender-name';
+        senderName.innerText = msg.sender;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'msg-content-wrapper';
+        wrapper.appendChild(senderName); wrapper.appendChild(bubbleDiv);
+        rowDiv.appendChild(avatarDiv); rowDiv.appendChild(wrapper);
+      } else {
+        if (msg.type === 'left') { rowDiv.appendChild(avatarDiv); rowDiv.appendChild(bubbleDiv); }
+        else { rowDiv.appendChild(bubbleDiv); rowDiv.appendChild(avatarDiv); }
+      }
+      msgArea.appendChild(rowDiv);
+    });
+    document.getElementById('chatDetail').classList.add('active');
+    msgArea.scrollTop = msgArea.scrollHeight;
+  }
+  function closeChat() { document.getElementById('chatDetail').classList.remove('active'); }
+  function openMoments() { document.getElementById('momentsView').classList.add('active'); }
+  function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
+  
+  function toggleLike(btn, listId) {
+    const list = document.getElementById(listId);
+    const isLiked = btn.classList.contains('liked');
+    if (!isLiked) {
+      btn.classList.add('liked'); btn.innerText = '❤️ 取消';
+      const mySpan = document.createElement('span');
+      mySpan.className = 'name liked-me'; mySpan.innerText = myNickname;
+      
+      const icon = list.querySelector('.icon');
+      if (icon) {
+        const hasOtherNames = list.querySelectorAll('.name:not(.liked-me)').length > 0;
+        list.insertBefore(mySpan, icon.nextSibling);
+        if (hasOtherNames) {
+          const sep = document.createElement('span');
+          sep.innerText = '、'; sep.className = 'liked-me-sep';
+          list.insertBefore(sep, mySpan.nextSibling);
+        }
+      } else {
+        list.appendChild(mySpan);
+      }
+    } else {
+      btn.classList.remove('liked'); btn.innerText = '❤️ 赞';
+      const mySpan = list.querySelector('.liked-me');
+      const sep = list.querySelector('.liked-me-sep');
+      if (mySpan) mySpan.remove(); 
+      if (sep) sep.remove();
+    }
+  }
+<\/script>
+</body>
+</html>`;
+
+    document.getElementById('output').style.display = 'block';
+    document.getElementById('outputCode').value = fullHtml;
+    window.generatedHtml = fullHtml;
+  }
+
+  function escapeStr(str) {
+    return (str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n');
+  }
+
+  function downloadFile() {
+    const blob = new Blob([window.generatedHtml], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'my-wechat.html'; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function copyCode() {
+    const code = document.getElementById('outputCode');
+    code.select(); document.execCommand('copy');
+    alert('代码已复制到剪贴板！');
+  }
+
+  addContact();
+  addMoment();
+</script>
+</body>
+</html>
