@@ -264,12 +264,20 @@
     </div>
     
     <!-- 朋友圈详情 -->
-    <div class="moments-view" id="momentsView">
-      <div class="moments-header">
-        <div class="back-btn" onclick="closeMoments()">返回</div>
-        <div class="user-info"><span>小魔女大爆炸</span><img src="images/dai.png" alt="头像"></div>
-      </div>
-      <div class="moments-body">
+   <div class="moments-view" id="momentsView">
+  <!-- 把返回按钮单独拎出来，悬浮在上面 -->
+  <div class="back-btn" onclick="closeMoments()" style="position: absolute; top: 55px; left: 15px; z-index: 999; color: #fff; font-size: 16px; display: flex; align-items: center; text-shadow: 0 1px 3px #000; cursor: pointer;">
+    <span style="font-size: 28px; margin-right: 2px; line-height: 1;">‹</span> 返回
+  </div>
+
+  <div class="moments-body" style="padding: 0; padding-bottom: 80px;"> <!-- 注意这里去掉了原本的 padding -->
+    <!-- 挪进来的头部 -->
+    <div class="moments-header">
+      <div class="user-info"><span>小魔女大爆炸</span><img src="images/dai.png" alt="头像"></div>
+    </div>
+    
+    <!-- 给动态列表加个左右的边距 -->
+    <div style="padding: 15px;">
         
         <!-- 动态 1 -->
         <div class="moment-item">
@@ -468,6 +476,8 @@
 
       </div>
     </div>
+    </div>
+    
   </div>
 </div>
 
