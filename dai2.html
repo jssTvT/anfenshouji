@@ -102,6 +102,8 @@
   <div class="wechat-app">
     <div class="nav-header" id="mainHeader">微信(93)</div>
     <div class="main-content">
+      
+      <!-- 微信标签页 -->
       <div class="tab-view active" id="tab-chats">
         <div class="chat-item" onclick="openChat('汉语言文学大家庭')">
           <div class="chat-avatar"><img src="images/hanyuyan.png" alt="汉语言文学大家庭"></div>
@@ -111,7 +113,6 @@
           </div>
           <div class="chat-meta">
             <div class="chat-time">12:00</div>
-            
             <div class="chat-mute">🔕</div>
           </div>
         </div>
@@ -123,8 +124,6 @@
           </div>
           <div class="chat-meta">
             <div class="chat-time">20:57</div>
-            
-            
           </div>
         </div>
         <div class="chat-item" onclick="openChat('也不想早（9）')">
@@ -135,8 +134,6 @@
           </div>
           <div class="chat-meta">
             <div class="chat-time">20：36</div>
-            
-            
           </div>
         </div>
         <div class="chat-item" onclick="openChat('孙翔')">
@@ -147,7 +144,6 @@
           </div>
           <div class="chat-meta">
             <div class="chat-time">20:07</div>
-            
             <div class="chat-mute">🔕</div>
           </div>
         </div>
@@ -159,8 +155,6 @@
           </div>
           <div class="chat-meta">
             <div class="chat-time">19:52</div>
-            
-            
           </div>
         </div>
         <div class="chat-item" onclick="openChat('机电3赵禹哲')">
@@ -171,17 +165,22 @@
           </div>
           <div class="chat-meta">
             <div class="chat-time">18:33</div>
-            
             <div class="chat-mute">🔕</div>
           </div>
-        </div></div>
+        </div>
+      </div>
+      
+      <!-- 通讯录标签页 -->
       <div class="tab-view" id="tab-contacts">
         <div class="contact-item"><div class="contact-avatar"><img src="images/hanyuyan.png" alt="汉语言文学大家庭"></div> 汉语言文学大家庭</div>
         <div class="contact-item"><div class="contact-avatar"><img src="images/zhangjia.jpg" alt="张佳乐"></div> 张佳乐</div>
         <div class="contact-item"><div class="contact-avatar"><img src="images/jiemeiqun.jpg" alt="也不想早（9）"></div> 也不想早（9）</div>
         <div class="contact-item"><div class="contact-avatar"><img src="images/sunx.jpg" alt="孙翔"></div> 孙翔</div>
         <div class="contact-item"><div class="contact-avatar"><img src="images/tanghao.jpg" alt="唐昊（孙翔哥们张佳乐学弟）"></div> 唐昊（孙翔哥们张佳乐学弟）</div>
-        <div class="contact-item"><div class="contact-avatar"><img src="images/zhaoyuzhe.png" alt="机电3赵禹哲"></div> 机电3赵禹哲</div></div>
+        <div class="contact-item"><div class="contact-avatar"><img src="images/zhaoyuzhe.png" alt="机电3赵禹哲"></div> 机电3赵禹哲</div>
+      </div>
+      
+      <!-- 发现标签页 -->
       <div class="tab-view" id="tab-discover">
         <div class="discover-item" onclick="openMoments()">
           <div class="discover-icon">📷</div>
@@ -191,6 +190,8 @@
         <div class="discover-item"><div class="discover-icon">📺</div><div class="discover-text">视频号</div><div class="discover-arrow">›</div></div>
         <div class="discover-item"><div class="discover-icon">🔍</div><div class="discover-text">扫一扫</div><div class="discover-arrow">›</div></div>
       </div>
+      
+      <!-- 我标签页 -->
       <div class="tab-view" id="tab-me">
         <div style="padding: 30px; text-align: center; background: #fff;">
           <div style="width: 70px; height: 70px; border-radius: 8px; margin: 0 auto 10px; overflow: hidden;">
@@ -204,213 +205,227 @@
         <div class="discover-item"><div class="discover-icon">⚙️</div><div class="discover-text">设置</div><div class="discover-arrow">›</div></div>
       </div>
     </div>
+    
+    <!-- 底部导航 -->
     <div class="bottom-nav">
       <div class="nav-item active" onclick="switchTab('tab-chats', '微信(93)')"><span class="nav-icon">💬</span>微信</div>
       <div class="nav-item" onclick="switchTab('tab-contacts', '通讯录')"><span class="nav-icon">👥</span>通讯录</div>
       <div class="nav-item" onclick="switchTab('tab-discover', '发现')"><span class="nav-icon">🧭</span>发现</div>
       <div class="nav-item" onclick="switchTab('tab-me', '我')"><span class="nav-icon">👤</span>我</div>
     </div>
+    
+    <!-- 聊天详情 -->
     <div class="chat-detail" id="chatDetail">
       <div class="nav-header"><div class="back-btn" onclick="closeChat()">返回</div><span id="chatTitle">聊天</span></div>
       <div class="msg-area" id="msgArea"></div>
       <div class="chat-input-area"><input type="text" placeholder="输入消息..."></div>
     </div>
+    
+    <!-- 朋友圈详情 -->
     <div class="moments-view" id="momentsView">
       <div class="moments-header">
         <div class="back-btn" onclick="closeMoments()">返回</div>
         <div class="user-info"><span>小魔女大爆炸</span><img src="images/dai.png" alt="头像"></div>
       </div>
       <div class="moments-body">
+        
+        <!-- 动态 1 -->
         <div class="moment-item">
-          <div class="moment-avatar"><img src="images/tanghao.jpg" alt="唐昊（孙翔哥们张佳乐学弟）"></div>
+          <div class="moment-avatar"><img src="images/tanghao.jpg" alt="唐昊"></div>
           <div class="moment-content">
             <div class="moment-name">唐昊（孙翔哥们张佳乐学弟）</div>
             <div class="moment-text">R大杯，练！</div>
-            
-        <div class="moment-images">
-          <img src="images/qiu.png" alt="">
-        </div>
+            <div class="moment-images">
+              <img src="images/qiu.png" alt="">
+            </div>
             <div class="moment-footer">
               <span>56分钟前</span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792228463064')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792228463064"><span class="icon">❤️</span><span class="name">张佳乐</span>、<span class="name">机电3班赵禹哲</span>、<span class="name">孙翔</span></div>
-              
-        <div class="comment-list">
-         <div class="comment-item"><span class="name">张佳乐</span><span class="content">：哇 黑夜运动男孩</span></div>
-          <div class="comment-item"><span class="name">唐昊（孙翔哥们张佳乐学弟）</span><span class="content"> 回复 </span><span class="name">张佳乐</span><span class="content">：不闹了</span></div>
-        </div>
+              <div class="comment-list">
+                <div class="comment-item"><span class="name">张佳乐</span><span class="content">：哇 黑夜运动男孩</span></div>
+                <div class="comment-item"><span class="name">唐昊（孙翔哥们张佳乐学弟）</span><span class="content"> 回复 </span><span class="name">张佳乐</span><span class="content">：不闹了</span></div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- 动态 2 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="images/chuyunxiu.png" alt="楚姐"></div>
           <div class="moment-content">
             <div class="moment-name">楚姐</div>
             <div class="moment-text">永远太远了明天陪我做立裁吧</div>
-            
             <div class="moment-footer">
               <span></span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792231539380')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792231539380"><span class="icon">❤️</span><span class="name">柔姐</span>、<span class="name">非非姐</span>、<span class="name">可欣</span>、<span class="name">可怡</span></div>
-              
-        <div class="comment-list">
-          <div class="comment-item"><span class="name">🍊</span><span class="content">：永远太远了今晚陪我看连续剧吧</span></div>
-          <div class="comment-item"><span class="name">楚姐</span><span class="content"> 回复 </span><span class="name">🍊</span><span class="content">：不是正看着吗</span></div>
-        </div>
+              <div class="comment-list">
+                <div class="comment-item"><span class="name">🍊</span><span class="content">：永远太远了今晚陪我看连续剧吧</span></div>
+                <div class="comment-item"><span class="name">楚姐</span><span class="content"> 回复 </span><span class="name">🍊</span><span class="content">：不是正看着吗</span></div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- 动态 3 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="images/fsq.png" alt="方士谦"></div>
           <div class="moment-content">
             <div class="moment-name">方士谦</div>
             <div class="moment-text">到底闹够没闹够</div>
-            
-        <div class="moment-images">
-          <img src="images/shixi.jpg" alt="">
-        </div>
+            <div class="moment-images">
+              <img src="images/shixi.jpg" alt="">
+            </div>
             <div class="moment-footer">
               <span>1小时前</span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792231726525')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792231726525"><span class="icon">❤️</span><span class="name">张佳乐</span></div>
-              
-        <div class="comment-list">
-         <div class="comment-item"><span class="name">张佳乐</span><span class="content">：牛逼我要是你退学了</span></div>
-          <div class="comment-item"><span class="name">机械院导员（林）</span><span class="content"> 回复 </span><span class="name">张佳乐</span><span class="content">：感觉这句话好像在哪里听过</span></div>
-          <div class="comment-item"><span class="name">方士谦</span><span class="content"> 回复 </span><span class="name">张佳乐</span><span class="content">：都到现在了你以为我还有退路吗。</span></div>
-          <div class="comment-item"><span class="name">黄少天</span><span class="content">：闹的只是课表吗</span></div>
-          <div class="comment-item"><span class="name">方士谦</span><span class="content"> 回复 </span><span class="name">黄少天</span><span class="content">：闹麻</span></div>
-          <div class="comment-item"><span class="name">黄少天</span><span class="content"> 回复 </span><span class="name">方士谦</span><span class="content">：我已难我已闹麻我已破防我已石化我已懵坤我已投降</span></div>
+              <div class="comment-list">
+                <div class="comment-item"><span class="name">张佳乐</span><span class="content">：牛逼我要是你退学了</span></div>
+                <div class="comment-item"><span class="name">机械院导员（林）</span><span class="content"> 回复 </span><span class="name">张佳乐</span><span class="content">：感觉这句话好像在哪里听过</span></div>
+                <div class="comment-item"><span class="name">方士谦</span><span class="content"> 回复 </span><span class="name">张佳乐</span><span class="content">：都到现在了你以为我还有退路吗。</span></div>
+                <div class="comment-item"><span class="name">黄少天</span><span class="content">：闹的只是课表吗</span></div>
+                <div class="comment-item"><span class="name">方士谦</span><span class="content"> 回复 </span><span class="name">黄少天</span><span class="content">：闹麻</span></div>
+                <div class="comment-item"><span class="name">黄少天</span><span class="content"> 回复 </span><span class="name">方士谦</span><span class="content">：我已难我已闹麻我已破防我已石化我已懵坤我已投降</span></div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- 动态 4 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="images/wang.png" alt="王杰希"></div>
           <div class="moment-content">
             <div class="moment-name">王杰希</div>
             <div class="moment-text">何时葡萄先熟透</div>
-            
-        <div class="moment-images">
-          <img src="images/ptcss.jpg" alt="">
-        </div>
+            <div class="moment-images">
+              <img src="images/ptcss.jpg" alt="">
+            </div>
             <div class="moment-footer">
               <span>1小时前</span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792231806947')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792231806947"><span class="icon">❤️</span><span class="name">张佳乐</span>、<span class="name">🍊</span>、<span class="name">楚姐</span>、<span class="name">黄少天</span>、<span class="name">喻文州</span>、<span class="name">郑轩</span></div>
-              
             </div>
           </div>
         </div>
+
+        <!-- 动态 5 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="images/dai.png" alt="小魔女大爆炸"></div>
           <div class="moment-content">
             <div class="moment-name">小魔女大爆炸</div>
             <div class="moment-text">老师问有没有自愿来这个课的请举手，然后没有一个人举手。</div>
-            
             <div class="moment-footer">
               <span>3小时前</span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792231848670')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792231848670"><span class="icon">❤️</span></div>
-              
             </div>
           </div>
         </div>
+
+        <!-- 动态 6 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="images/dai.png" alt="小魔女大爆炸"></div>
           <div class="moment-content">
             <div class="moment-name">小魔女大爆炸</div>
             <div class="moment-text">。。足球love</div>
-            
             <div class="moment-footer">
               <span></span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792231860589')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792231860589"><span class="icon">❤️</span><span class="name">唐昊</span>、<span class="name">机电3班赵禹哲</span></div>
-              
-        <div class="comment-list">
-          <div class="comment-item"><span class="name">张佳乐</span><span class="content">：👍</span></div><div class="comment-item"><span class="name">孙翔</span><span class="content">：？</span></div>
-        </div>
+              <div class="comment-list">
+                <div class="comment-item"><span class="name">张佳乐</span><span class="content">：👍</span></div>
+                <div class="comment-item"><span class="name">孙翔</span><span class="content">：？</span></div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- 动态 7 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="images/dai.png" alt="小魔女大爆炸"></div>
           <div class="moment-content">
             <div class="moment-name">小魔女大爆炸</div>
             <div class="moment-text">我去体育课怎么这周就开始了，我以为没课还穿着皮裤呢，等一下放屁鼓包怎么办</div>
-            
             <div class="moment-footer">
               <span>3小时前</span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792231867538')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792231867538"><span class="icon">❤️</span></div>
-              
-        <div class="comment-list">
-          <div class="comment-item"><span class="name">张佳乐</span><span class="content">：Vlog | 零基础女大学生选到足球课是一种什么样的体验</span></div>
-          <div class="comment-item"><span class="name">小魔女大爆炸</span><span class="content"> 回复 </span><span class="name">张佳乐</span><span class="content">：TD</span></div>
-        </div>
+              <div class="comment-list">
+                <div class="comment-item"><span class="name">张佳乐</span><span class="content">：Vlog | 零基础女大学生选到足球课是一种什么样的体验</span></div>
+                <div class="comment-item"><span class="name">小魔女大爆炸</span><span class="content"> 回复 </span><span class="name">张佳乐</span><span class="content">：TD</span></div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- 动态 8 -->
         <div class="moment-item">
           <div class="moment-avatar"><img src="" alt="郑轩"></div>
           <div class="moment-content">
             <div class="moment-name">郑轩</div>
             <div class="moment-text">🦙</div>
-            
-        <div class="moment-images">
-          <img src="images/yangtuo.png" alt="">
-        </div>
+            <div class="moment-images">
+              <img src="images/yangtuo.png" alt="">
+            </div>
             <div class="moment-footer">
               <span>4小时前</span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792232022755')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792232022755"><span class="icon">❤️</span><span class="name">🍊</span>、<span class="name">楚姐</span>、<span class="name">黄少天</span>、<span class="name">喻文州</span>、<span class="name">方士谦</span>、<span class="name">王杰希</span>、<span class="name">孙翔</span></div>
-              
-        <div class="comment-list">
-          <div class="comment-item"><span class="name">🍊</span><span class="content">：可爱</span></div><div class="comment-item"><span class="name"> （注）</span><span class="content">：图中的羊驼在渤海大学其实班群通知也是</span></div>
-        </div>
+              <div class="comment-list">
+                <div class="comment-item"><span class="name">🍊</span><span class="content">：可爱</span></div>
+                <div class="comment-item"><span class="name">（注）</span><span class="content">：图中的羊驼在渤海大学其实班群通知也是</span></div>
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- 动态 9 -->
         <div class="moment-item">
-          <div class="moment-avatar"><img src="images/tanghao.jpg" alt="唐昊（孙翔哥们张佳乐学弟）"></div>
+          <div class="moment-avatar"><img src="images/tanghao.jpg" alt="唐昊"></div>
           <div class="moment-content">
             <div class="moment-name">唐昊（孙翔哥们张佳乐学弟）</div>
             <div class="moment-text">胜你无需第二剑⚽️</div>
-            
-        <div class="moment-images">
-          <img src="images/zuzao.png" alt=""><img src="images/zuwan.png" alt="">
-        </div>
+            <div class="moment-images">
+              <img src="images/zuzao.png" alt="">
+              <img src="images/zuwan.png" alt="">
+            </div>
             <div class="moment-footer">
               <span>昨天 20:00</span>
               <span class="moment-like-btn" onclick="toggleLike(this, 'like-list-1792232079265')">❤️ 赞</span>
             </div>
             <div class="moments-interaction">
               <div class="like-list" id="like-list-1792232079265"><span class="icon">❤️</span><span class="name">张佳乐</span>、<span class="name">r大校园墙</span>、<span class="name">机电3班赵禹哲</span>、<span class="name">孙翔</span></div>
-              
-        <div class="comment-list">
-          <div class="comment-item"><span class="name">孙翔</span><span class="content">：你见过早上六点的足球场吗？昊见过！</span></div><div class="comment-item"><span class="name"> 张佳乐</span><span class="content">：哇 阳光运动男孩</span></div>
-        </div>
+              <div class="comment-list">
+                <div class="comment-item"><span class="name">孙翔</span><span class="content">：你见过早上六点的足球场吗？昊见过！</span></div>
+                <div class="comment-item"><span class="name">张佳乐</span><span class="content">：哇 阳光运动男孩</span></div>
+              </div>
             </div>
           </div>
-        </div></div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
+
 <script>
   const myAvatarUrl = 'images/dai.png';
   const myNickname = '小魔女大爆炸';
@@ -514,6 +529,7 @@
       ]
     }
   };
+
   function switchTab(tabId, title) {
     document.querySelectorAll('.tab-view').forEach(tab => tab.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
@@ -522,6 +538,7 @@
     event.currentTarget.classList.add('active');
     closeChat(); closeMoments();
   }
+
   function openChat(name) {
     document.getElementById('chatTitle').innerText = name;
     const msgArea = document.getElementById('msgArea');
@@ -578,6 +595,7 @@
     document.getElementById('chatDetail').classList.add('active');
     msgArea.scrollTop = msgArea.scrollHeight;
   }
+
   function closeChat() { document.getElementById('chatDetail').classList.remove('active'); }
   function openMoments() { document.getElementById('momentsView').classList.add('active'); }
   function closeMoments() { document.getElementById('momentsView').classList.remove('active'); }
