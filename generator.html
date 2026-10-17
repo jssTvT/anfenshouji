@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>高仿微信生成器 - 终极完美版</title>
+<title>沉浸式捡手机生成器</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, "PingFang SC", sans-serif; background: #f5f5f5; padding: 20px; padding-bottom: 80px; }
@@ -15,22 +15,33 @@
   .field label { display: block; font-size: 13px; color: #666; margin-bottom: 5px; }
   .field input, .field textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit; }
   .field textarea { resize: vertical; min-height: 40px; max-height: 150px; }
-  .btn { display: inline-block; padding: 10px 20px; background: #07c160; color: #fff; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; transition: opacity 0.2s; }
+  .btn { display: inline-block; padding: 8px 15px; background: #07c160; color: #fff; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: opacity 0.2s; }
   .btn:hover { opacity: 0.9; }
   .btn.blue { background: #3498db; }
   .btn.red { background: #e74c3c; }
-  .btn.small { padding: 5px 10px; font-size: 12px; }
+  .btn.gray { background: #999; }
+  .btn.small { padding: 4px 8px; font-size: 12px; }
+  
   .list-item { border: 1px solid #eee; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fafafa; position: relative; transition: all 0.2s; }
   .list-item.dragging { opacity: 0.5; border: 1px dashed #07c160; }
   .list-item.drag-over { border: 1px solid #07c160; background: #f0fff4; }
-  .drag-handle { display: flex; align-items: center; justify-content: center; background: #e8e8e8; color: #666; padding: 6px 0; margin-bottom: 10px; border-radius: 4px; cursor: grab; font-size: 13px; user-select: none; }
+  
+  .card-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px dashed #ddd; padding-bottom: 8px; }
+  .drag-handle { background: #e8e8e8; color: #666; padding: 4px 10px; border-radius: 4px; cursor: grab; font-size: 12px; user-select: none; }
   .drag-handle:active { cursor: grabbing; background: #ddd; }
-  .drag-handle span { margin-right: 5px; font-size: 16px; }
-  .list-item .remove { position: absolute; top: 10px; right: 10px; z-index: 10; }
-  .row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; }
+  .order-controls { display: flex; gap: 5px; }
+  
+  .row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; background: #fff; padding: 10px; border: 1px solid #eee; border-radius: 6px; position: relative; }
+  .row.dragging { opacity: 0.5; border: 1px dashed #3498db; }
+  .row.drag-over { border: 1px solid #3498db; background: #f0f8ff; }
   .row select { width: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; }
   .row input { flex: 1; min-width: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; }
-  .row textarea { flex: 1; min-width: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; min-height: 40px; resize: vertical; }
+  .row textarea { flex: 1; min-width: 150px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; min-height: 40px; resize: vertical; }
+  .row-handle { cursor: grab; color: #aaa; font-size: 16px; padding-top: 8px; }
+  
+  .comment-card { background: #f0f8ff; border: 1px solid #d0e3f0; border-radius: 6px; padding: 10px; margin-bottom: 8px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .comment-card input { flex: 1; min-width: 80px; padding: 6px 10px; border: 1px solid #c0d8e8; border-radius: 4px; font-size: 13px; }
+  
   .output { margin-top: 20px; padding: 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: none; }
   .output textarea { width: 100%; height: 250px; padding: 10px; font-family: monospace; font-size: 12px; border: 1px solid #ddd; border-radius: 6px; }
   .actions { margin-top: 10px; display: flex; gap: 10px; }
@@ -38,30 +49,15 @@
 </head>
 <body>
 <div class="container">
-  <h1>📱 高仿微信生成器 (终极完美版)</h1>
+  <h1>📱 高仿微信生成器 (终极神级版)</h1>
 
   <div class="card">
     <h2>👤 手机主人信息</h2>
-    <div class="field">
-      <label>你的微信昵称（点赞时显示在最前面）</label>
-      <input type="text" id="myNickname" value="小魔女大爆炸" placeholder="请输入昵称">
-    </div>
-    <div class="field">
-      <label>你的微信号（个人主页显示）</label>
-      <input type="text" id="myWechatId" value="wxid_123456" placeholder="请输入微信号">
-    </div>
-    <div class="field">
-      <label>你的头像路径（图片链接或本地路径）</label>
-      <input type="text" id="myAvatar" value="images/dai.png" placeholder="images/dai.png 或 https://...">
-    </div>
-    <div class="field">
-      <label>手机左上角系统时间（例如：13:33）</label>
-      <input type="text" id="systemTime" value="13:33">
-    </div>
-    <div class="field">
-      <label>朋友圈背景图路径</label>
-      <input type="text" id="momentsBg" value="images/bg.jpg">
-    </div>
+    <div class="field"><label>你的微信昵称</label><input type="text" id="myNickname" value="小魔女大爆炸"></div>
+    <div class="field"><label>你的微信号</label><input type="text" id="myWechatId" value="wxid_123456"></div>
+    <div class="field"><label>你的头像路径</label><input type="text" id="myAvatar" value="images/dai.png"></div>
+    <div class="field"><label>手机左上角系统时间</label><input type="text" id="systemTime" value="13:33"></div>
+    <div class="field"><label>朋友圈背景图路径</label><input type="text" id="momentsBg" value="images/bg.jpg"></div>
   </div>
 
   <div class="card">
@@ -93,73 +89,95 @@
 <script>
   let contacts = [];
   let moments = [];
+  
+  // 拖拽状态
   let draggedContactId = null;
   let draggedMomentId = null;
+  let draggedMsg = { contactId: null, index: null };
 
-  // --- 联系人操作 ---
+  // ================= 联系人操作 =================
   function addContact() {
-    const id = Date.now();
-    contacts.push({ id, name: '', avatar: '', isGroup: false, preview: '', listTime: '刚刚', unread: 0, isMuted: false, messages: [] });
+    contacts.push({ id: Date.now(), name: '', avatar: '', isGroup: false, preview: '', listTime: '刚刚', unread: 0, isMuted: false, messages: [] });
     renderContacts();
   }
-
   function removeContact(id) {
     contacts = contacts.filter(c => c.id !== id);
     renderContacts();
   }
-
+  function moveContact(index, direction) {
+    if (index + direction < 0 || index + direction >= contacts.length) return;
+    const temp = contacts[index];
+    contacts[index] = contacts[index + direction];
+    contacts[index + direction] = temp;
+    renderContacts();
+  }
   function updateContact(id, field, value) {
     const c = contacts.find(c => c.id === id);
     if (c) c[field] = value;
     if (field === 'isGroup') renderContacts();
   }
 
+  // --- 消息操作 ---
   function addMessage(contactId) {
     const c = contacts.find(c => c.id === contactId);
-    if (c) {
-      c.messages.push({ type: 'left', sender: '', senderAvatar: '', text: '' });
-      renderContacts();
-    }
+    if (c) { c.messages.push({ type: 'left', sender: '', senderAvatar: '', text: '' }); renderContacts(); }
   }
-
   function removeMessage(contactId, idx) {
     const c = contacts.find(c => c.id === contactId);
     if (c) { c.messages.splice(idx, 1); renderContacts(); }
   }
-
   function updateMessage(contactId, idx, field, value) {
     const c = contacts.find(c => c.id === contactId);
     if (c && c.messages[idx]) c.messages[idx][field] = value;
-    if (field === 'type') renderContacts();
+    if (field === 'type') renderContacts(); // 切换类型需要刷新 DOM 以显示头像输入框
+  }
+  function moveMessage(contactId, idx, direction) {
+    const c = contacts.find(c => c.id === contactId);
+    if (!c) return;
+    const newIdx = idx + direction;
+    if (newIdx < 0 || newIdx >= c.messages.length) return;
+    const temp = c.messages[idx];
+    c.messages[idx] = c.messages[newIdx];
+    c.messages[newIdx] = temp;
+    renderContacts();
   }
 
-  // --- 联系人拖拽逻辑 ---
+  // --- 消息拖拽 ---
+  function handleMsgDragStart(e, contactId, idx) {
+    draggedMsg = { contactId, index: idx };
+    e.currentTarget.closest('.row').classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  }
+  function handleMsgDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+  function handleMsgDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+  function handleMsgDrop(e, contactId, targetIdx) {
+    e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
+    if (draggedMsg.contactId !== contactId || draggedMsg.index === targetIdx) return;
+    
+    const c = contacts.find(c => c.id === contactId);
+    const [draggedItem] = c.messages.splice(draggedMsg.index, 1);
+    c.messages.splice(targetIdx, 0, draggedItem);
+    renderContacts();
+    draggedMsg = { contactId: null, index: null };
+  }
+
+  // --- 联系人拖拽 ---
   function handleContactDragStart(e, id) {
     draggedContactId = id;
     e.currentTarget.closest('.list-item').classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
   }
-
-  function handleContactDragOver(e) {
-    e.preventDefault();
-    e.currentTarget.classList.add('drag-over');
-  }
-
-  function handleContactDragLeave(e) {
-    e.currentTarget.classList.remove('drag-over');
-  }
-
+  function handleContactDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+  function handleContactDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
   function handleContactDrop(e, targetId) {
-    e.preventDefault();
-    e.currentTarget.classList.remove('drag-over');
+    e.preventDefault(); e.currentTarget.classList.remove('drag-over');
     if (draggedContactId === targetId) return;
-    
-    const dragIndex = contacts.findIndex(c => c.id === draggedContactId);
-    const dropIndex = contacts.findIndex(c => c.id === targetId);
-    
-    if (dragIndex !== -1 && dropIndex !== -1) {
-      const [draggedItem] = contacts.splice(dragIndex, 1);
-      contacts.splice(dropIndex, 0, draggedItem);
+    const dragIdx = contacts.findIndex(c => c.id === draggedContactId);
+    const dropIdx = contacts.findIndex(c => c.id === targetId);
+    if (dragIdx !== -1 && dropIdx !== -1) {
+      const [item] = contacts.splice(dragIdx, 1);
+      contacts.splice(dropIdx, 0, item);
       renderContacts();
     }
     draggedContactId = null;
@@ -169,109 +187,107 @@
     const box = document.getElementById('contactList');
     if (contacts.length === 0) { box.innerHTML = '<p style="color:#999;">暂无联系人</p>'; return; }
     
-    box.innerHTML = contacts.map(c => `
+    box.innerHTML = contacts.map((c, cIdx) => `
       <div class="list-item" ondragover="handleContactDragOver(event)" ondragleave="handleContactDragLeave(event)" ondrop="handleContactDrop(event, ${c.id})">
-        <div class="drag-handle" draggable="true" ondragstart="handleContactDragStart(event, ${c.id})">
-          <span>☰</span> 按住拖动排序
-        </div>
-        <button class="btn red small remove" onclick="removeContact(${c.id})">删除</button>
-        <div class="field">
-          <label>名字（显示在列表）</label>
-          <input type="text" value="${c.name}" oninput="updateContact(${c.id}, 'name', this.value)" placeholder="例如：张佳乐">
-        </div>
-        <div class="field">
-          <label>群聊/联系人头像路径</label>
-          <input type="text" value="${c.avatar}" oninput="updateContact(${c.id}, 'avatar', this.value)" placeholder="images/zhangjia.jpg">
-        </div>
-        <div class="field">
-          <label>消息预览文字（留空则自动抓取最后一条）</label>
-          <input type="text" value="${c.preview}" oninput="updateContact(${c.id}, 'preview', this.value)" placeholder="留空自动抓取最后一条消息">
-        </div>
-        <div class="field">
-          <label>列表显示时间（显示在列表右侧，例如：刚刚、上午09:42、昨天）</label>
-          <input type="text" value="${c.listTime || '刚刚'}" oninput="updateContact(${c.id}, 'listTime', this.value)" placeholder="刚刚">
-        </div>
-        <div class="field" style="display:flex; align-items:center; gap:10px;">
-          <label style="margin:0;">是否群聊</label>
-          <input type="checkbox" ${c.isGroup ? 'checked' : ''} onchange="updateContact(${c.id}, 'isGroup', this.checked)">
-        </div>
-        <div class="field" style="display:flex; gap:10px;">
-          <div style="flex:1;">
-            <label>未读消息数（0代表不显示红点）</label>
-            <input type="number" value="${c.unread || 0}" oninput="updateContact(${c.id}, 'unread', parseInt(this.value) || 0)">
-          </div>
-          <div style="flex:1; display:flex; align-items:center; gap:10px; padding-top:20px;">
-            <label style="margin:0;">免打扰</label>
-            <input type="checkbox" ${c.isMuted ? 'checked' : ''} onchange="updateContact(${c.id}, 'isMuted', this.checked)">
+        <div class="card-header-bar">
+          <div class="drag-handle" draggable="true" ondragstart="handleContactDragStart(event, ${c.id})">☰ 拖动</div>
+          <div class="order-controls">
+            <button class="btn gray small" onclick="moveContact(${cIdx}, -1)">⬆️ 上移</button>
+            <button class="btn gray small" onclick="moveContact(${cIdx}, 1)">⬇️ 下移</button>
+            <button class="btn red small" onclick="removeContact(${c.id})">删除</button>
           </div>
         </div>
-        <div class="field">
-          <label>聊天记录（支持直接敲回车换行，也支持图片代码）</label>
-          ${c.messages.map((m, i) => `
-            <div class="row">
-              <select onchange="updateMessage(${c.id}, ${i}, 'type', this.value)">
-                <option value="left" ${m.type === 'left' ? 'selected' : ''}>对方</option>
-                <option value="right" ${m.type === 'right' ? 'selected' : ''}>自己</option>
-                <option value="time" ${m.type === 'time' ? 'selected' : ''}>时间</option>
-              </select>
-              ${c.isGroup && m.type === 'left' ? `
-                <input type="text" style="width:70px;" placeholder="发送者" value="${m.sender || ''}" oninput="updateMessage(${c.id}, ${i}, 'sender', this.value)">
-                <input type="text" style="width:70px;" placeholder="头像路径" value="${m.senderAvatar || ''}" oninput="updateMessage(${c.id}, ${i}, 'senderAvatar', this.value)">
-              ` : ''}
-              <textarea placeholder="消息内容（敲回车直接换行）" oninput="updateMessage(${c.id}, ${i}, 'text', this.value)">${m.text}</textarea>
-              <button class="btn red small" onclick="removeMessage(${c.id}, ${i})">×</button>
-            </div>
-          `).join('')}
+        <div class="field"><label>名字</label><input type="text" value="${c.name}" oninput="updateContact(${c.id}, 'name', this.value)"></div>
+        <div class="field"><label>头像路径</label><input type="text" value="${c.avatar}" oninput="updateContact(${c.id}, 'avatar', this.value)"></div>
+        <div class="field"><label>消息预览（留空自动抓取）</label><input type="text" value="${c.preview}" oninput="updateContact(${c.id}, 'preview', this.value)"></div>
+        <div class="field"><label>列表时间</label><input type="text" value="${c.listTime}" oninput="updateContact(${c.id}, 'listTime', this.value)"></div>
+        <div class="field" style="display:flex; gap:20px; align-items:center;">
+          <label style="margin:0;"><input type="checkbox" ${c.isGroup ? 'checked' : ''} onchange="updateContact(${c.id}, 'isGroup', this.checked)"> 群聊</label>
+          <label style="margin:0;">未读数：<input type="number" value="${c.unread}" style="width:60px;" oninput="updateContact(${c.id}, 'unread', parseInt(this.value)||0)"></label>
+          <label style="margin:0;"><input type="checkbox" ${c.isMuted ? 'checked' : ''} onchange="updateContact(${c.id}, 'isMuted', this.checked)"> 免打扰</label>
+        </div>
+        
+        <div class="field" style="background:#f0f0f0; padding:10px; border-radius:6px;">
+          <label>聊天记录（可拖拽或者点箭头排序）</label>
+          <div id="msg-list-${c.id}">
+            ${c.messages.map((m, i) => `
+              <div class="row" draggable="true" ondragstart="handleMsgDragStart(event, ${c.id}, ${i})" ondragover="handleMsgDragOver(event)" ondragleave="handleMsgDragLeave(event)" ondrop="handleMsgDrop(event, ${c.id}, ${i})">
+                <div class="row-handle">☰</div>
+                <select onchange="updateMessage(${c.id}, ${i}, 'type', this.value)">
+                  <option value="left" ${m.type === 'left' ? 'selected' : ''}>对方</option>
+                  <option value="right" ${m.type === 'right' ? 'selected' : ''}>自己</option>
+                  <option value="time" ${m.type === 'time' ? 'selected' : ''}>时间</option>
+                </select>
+                ${c.isGroup && m.type === 'left' ? `
+                  <input type="text" style="width:60px;" placeholder="发送者" value="${m.sender || ''}" oninput="updateMessage(${c.id}, ${i}, 'sender', this.value)">
+                  <input type="text" style="width:60px;" placeholder="头像" value="${m.senderAvatar || ''}" oninput="updateMessage(${c.id}, ${i}, 'senderAvatar', this.value)">
+                ` : ''}
+                <textarea placeholder="消息内容" oninput="updateMessage(${c.id}, ${i}, 'text', this.value)">${m.text}</textarea>
+                <div style="display:flex; flex-direction:column; gap:2px;">
+                  <button class="btn gray small" style="padding:2px 5px;" onclick="moveMessage(${c.id}, ${i}, -1)">⬆️</button>
+                  <button class="btn red small" style="padding:2px 5px;" onclick="removeMessage(${c.id}, ${i})">×</button>
+                  <button class="btn gray small" style="padding:2px 5px;" onclick="moveMessage(${c.id}, ${i}, 1)">⬇️</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
           <button class="btn small" style="margin-top:8px;" onclick="addMessage(${c.id})">+ 添加消息</button>
         </div>
       </div>
     `).join('');
   }
 
-  // --- 朋友圈操作 ---
+  // ================= 朋友圈操作 =================
   function addMoment() {
-    const id = Date.now();
-    moments.push({ id, name: '', avatar: '', text: '', images: [], time: '', likes: '', comments: '' });
+    moments.push({ id: Date.now(), name: '', avatar: '', text: '', images: [], time: '', likes: '', comments: [] });
     renderMoments();
   }
-
   function removeMoment(id) {
     moments = moments.filter(m => m.id !== id);
     renderMoments();
   }
-
+  function moveMoment(index, direction) {
+    if (index + direction < 0 || index + direction >= moments.length) return;
+    const temp = moments[index];
+    moments[index] = moments[index + direction];
+    moments[index + direction] = temp;
+    renderMoments();
+  }
   function updateMoment(id, field, value) {
     const m = moments.find(m => m.id === id);
     if (m) m[field] = value;
   }
 
-  // --- 朋友圈拖拽逻辑 ---
+  // --- 评论操作 ---
+  function addComment(momentId) {
+    const m = moments.find(m => m.id === momentId);
+    if (m) { m.comments.push({ name: '', replyTo: '', content: '' }); renderMoments(); }
+  }
+  function removeComment(momentId, idx) {
+    const m = moments.find(m => m.id === momentId);
+    if (m) { m.comments.splice(idx, 1); renderMoments(); }
+  }
+  function updateComment(momentId, idx, field, value) {
+    const m = moments.find(m => m.id === momentId);
+    if (m && m.comments[idx]) m.comments[idx][field] = value;
+  }
+
+  // --- 朋友圈拖拽 ---
   function handleMomentDragStart(e, id) {
     draggedMomentId = id;
     e.currentTarget.closest('.list-item').classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
   }
-
-  function handleMomentDragOver(e) {
-    e.preventDefault();
-    e.currentTarget.classList.add('drag-over');
-  }
-
-  function handleMomentDragLeave(e) {
-    e.currentTarget.classList.remove('drag-over');
-  }
-
+  function handleMomentDragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+  function handleMomentDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
   function handleMomentDrop(e, targetId) {
-    e.preventDefault();
-    e.currentTarget.classList.remove('drag-over');
+    e.preventDefault(); e.currentTarget.classList.remove('drag-over');
     if (draggedMomentId === targetId) return;
-
-    const dragIndex = moments.findIndex(m => m.id === draggedMomentId);
-    const dropIndex = moments.findIndex(m => m.id === targetId);
-
-    if (dragIndex !== -1 && dropIndex !== -1) {
-      const [draggedItem] = moments.splice(dragIndex, 1);
-      moments.splice(dropIndex, 0, draggedItem);
+    const dragIdx = moments.findIndex(m => m.id === draggedMomentId);
+    const dropIdx = moments.findIndex(m => m.id === targetId);
+    if (dragIdx !== -1 && dropIdx !== -1) {
+      const [item] = moments.splice(dragIdx, 1);
+      moments.splice(dropIdx, 0, item);
       renderMoments();
     }
     draggedMomentId = null;
@@ -281,45 +297,43 @@
     const box = document.getElementById('momentList');
     if (moments.length === 0) { box.innerHTML = '<p style="color:#999;">暂无朋友圈</p>'; return; }
     
-    box.innerHTML = moments.map(m => `
+    box.innerHTML = moments.map((m, mIdx) => `
       <div class="list-item" ondragover="handleMomentDragOver(event)" ondragleave="handleMomentDragLeave(event)" ondrop="handleMomentDrop(event, ${m.id})">
-        <div class="drag-handle" draggable="true" ondragstart="handleMomentDragStart(event, ${m.id})">
-          <span>☰</span> 按住拖动排序
+        <div class="card-header-bar">
+          <div class="drag-handle" draggable="true" ondragstart="handleMomentDragStart(event, ${m.id})">☰ 拖动</div>
+          <div class="order-controls">
+            <button class="btn gray small" onclick="moveMoment(${mIdx}, -1)">⬆️ 上移</button>
+            <button class="btn gray small" onclick="moveMoment(${mIdx}, 1)">⬇️ 下移</button>
+            <button class="btn red small" onclick="removeMoment(${m.id})">删除</button>
+          </div>
         </div>
-        <button class="btn red small remove" onclick="removeMoment(${m.id})">删除</button>
-        <div class="field">
-          <label>发布人名字</label>
-          <input type="text" value="${m.name}" oninput="updateMoment(${m.id}, 'name', this.value)" placeholder="张佳乐">
-        </div>
-        <div class="field">
-          <label>发布人头像路径</label>
-          <input type="text" value="${m.avatar}" oninput="updateMoment(${m.id}, 'avatar', this.value)" placeholder="images/zhangjia.jpg">
-        </div>
-        <div class="field">
-          <label>正文内容</label>
-          <textarea oninput="updateMoment(${m.id}, 'text', this.value)" placeholder="今天的排练很顺利！">${m.text}</textarea>
-        </div>
-        <div class="field">
-          <label>配图路径（逗号分隔，最多3张，英文逗号）</label>
-          <input type="text" value="${m.images.join(',')}" oninput="updateMoment(${m.id}, 'images', this.value.split(','))" placeholder="images/img1.jpg,images/img2.jpg">
-        </div>
-        <div class="field">
-          <label>发布时间</label>
-          <input type="text" value="${m.time}" oninput="updateMoment(${m.id}, 'time', this.value)" placeholder="刚刚">
-        </div>
-        <div class="field">
-          <label>点赞人（用中文顿号分隔，如：楚姐、张佳乐）</label>
-          <input type="text" value="${m.likes}" oninput="updateMoment(${m.id}, 'likes', this.value)" placeholder="楚姐、张佳乐">
-        </div>
-        <div class="field">
-          <label>评论 <span style="color:#e74c3c; font-weight:bold;">（必须使用英文冒号分隔名字和内容，多条用英文分号 ; 隔开）</span></label>
-          <input type="text" value="${m.comments}" oninput="updateMoment(${m.id}, 'comments', this.value)" placeholder="楚姐:好耶！;张佳乐:回复 楚姐：没问题！">
+        <div class="field"><label>发布人名字</label><input type="text" value="${m.name}" oninput="updateMoment(${m.id}, 'name', this.value)"></div>
+        <div class="field"><label>发布人头像路径</label><input type="text" value="${m.avatar}" oninput="updateMoment(${m.id}, 'avatar', this.value)"></div>
+        <div class="field"><label>正文内容</label><textarea oninput="updateMoment(${m.id}, 'text', this.value)">${m.text}</textarea></div>
+        <div class="field"><label>配图路径（逗号分隔）</label><input type="text" value="${m.images.join(',')}" oninput="updateMoment(${m.id}, 'images', this.value.split(','))"></div>
+        <div class="field"><label>发布时间</label><input type="text" value="${m.time}" oninput="updateMoment(${m.id}, 'time', this.value)"></div>
+        <div class="field"><label>点赞人（顿号分隔）</label><input type="text" value="${m.likes}" oninput="updateMoment(${m.id}, 'likes', this.value)"></div>
+        
+        <div class="field" style="background:#eef7ff; padding:10px; border-radius:6px;">
+          <label>评论区（结构化填写）</label>
+          <div id="comment-list-${m.id}">
+            ${m.comments.map((c, cIdx) => `
+              <div class="comment-card">
+                <input type="text" placeholder="评论人" value="${c.name}" oninput="updateComment(${m.id}, ${cIdx}, 'name', this.value)" style="width:80px;">
+                <span style="color:#888; font-size:12px;">回复</span>
+                <input type="text" placeholder="回复谁(可空)" value="${c.replyTo}" oninput="updateComment(${m.id}, ${cIdx}, 'replyTo', this.value)" style="width:80px;">
+                <input type="text" placeholder="评论内容" value="${c.content}" oninput="updateComment(${m.id}, ${cIdx}, 'content', this.value)" style="flex:2;">
+                <button class="btn red small" onclick="removeComment(${m.id}, ${cIdx})">×</button>
+              </div>
+            `).join('')}
+          </div>
+          <button class="btn small blue" style="margin-top:8px;" onclick="addComment(${m.id})">+ 添加评论</button>
         </div>
       </div>
     `).join('');
   }
 
-  // --- 生成逻辑 ---
+  // ================= 生成 HTML =================
   function generateHTML() {
     const myNickname = document.getElementById('myNickname').value || '我';
     const myWechatId = document.getElementById('myWechatId').value || 'wxid_default';
@@ -330,10 +344,7 @@
     const chatDataStr = contacts.filter(c => c.name).map(c => {
       const msgs = c.messages.map(m => {
         if (m.type === 'time') return `{ type: 'time', text: '${escapeStr(m.text)}' }`;
-        
-        // 核心换行处理：把用户输入的回车替换为 <br>
         const finalText = (m.text || '').replace(/\n/g, '<br>');
-        
         if (c.isGroup && m.type === 'left') {
           return `{ type: 'left', sender: '${escapeStr(m.sender)}', senderAvatar: '${escapeStr(m.senderAvatar)}', text: '${escapeStr(finalText)}' }`;
         }
@@ -342,16 +353,10 @@
       return `'${c.name}': {\n      avatar: '${c.avatar}',\n      isGroup: ${c.isGroup},\n      messages: [\n        ${msgs}\n      ]\n    }`;
     }).join(',\n    ');
 
-    // 聊天列表 HTML
     const contactListHtml = contacts.filter(c => c.name).map(c => {
-      // 免打扰逻辑：如果开启了免打扰，未读消息显示为红点，否则显示数字气泡
       let badgeHtml = '';
       if (c.unread > 0) {
-        if (c.isMuted) {
-          badgeHtml = `<div class="chat-badge-red-dot"></div>`;
-        } else {
-          badgeHtml = `<div class="chat-badge">${c.unread}</div>`;
-        }
+        badgeHtml = c.isMuted ? `<div class="chat-badge-red-dot"></div>` : `<div class="chat-badge">${c.unread}</div>`;
       }
       const muteHtml = c.isMuted ? `<div class="chat-mute">🔕</div>` : '';
       
@@ -365,9 +370,7 @@
               let text = msg.text || '';
               if (text.includes('<img')) text = '[图片]';
               text = text.replace(/<br\s*\/?>/gi, ' ').replace(/\n/g, ' ');
-              if (c.isGroup && msg.type === 'left' && msg.sender) {
-                text = msg.sender + ': ' + text;
-              }
+              if (c.isGroup && msg.type === 'left' && msg.sender) text = msg.sender + ': ' + text;
               lastMsg = text;
               break;
             }
@@ -375,11 +378,9 @@
         }
         previewText = lastMsg;
       }
-
       const listTime = c.listTime && c.listTime.trim() !== '' ? c.listTime : '刚刚';
-
       return `
-        <div class="chat-item" onclick="openChat('${c.name}')">
+        <div class="chat-item ${c.isPinned ? 'pinned' : ''}" onclick="openChat('${c.name}')">
           <div class="chat-avatar"><img src="${c.avatar}" alt="${c.name}"></div>
           <div class="chat-info">
             <div class="chat-name">${c.name}</div>
@@ -401,23 +402,16 @@
       
       const likesHtml = m.likes ? `<div class="like-list"><span class="icon">❤️</span>${m.likes.split(/[、,，]/).filter(Boolean).map(n => `<span class="name">${n}</span>`).join('、')}</div>` : `<div class="like-list"><span class="icon">❤️</span></div>`;
       
-           const commentsHtml = m.comments ? `
+      const commentsHtml = m.comments.length > 0 ? `
         <div class="comment-list">
-          ${m.comments.split(';').filter(Boolean).map(c => {
-            const parts = c.split(':');
-            if (parts.length < 2) return '';
-            const name = parts[0];
-            let content = parts.slice(1).join(':');
-            
-            // 核心升级：自动识别“回复”格式
-            const replyMatch = content.match(/^\s*回复\s+(.*?)[：:](.*)$/);
-            if (replyMatch) {
-              const replyName = replyMatch[1]; // 被回复的人
-              const replyContent = replyMatch[2]; // 真正的内容
-              return `<div class="comment-item"><span class="name">${name}</span><span class="content"> 回复 </span><span class="name">${replyName}</span><span class="content">：${replyContent}</span></div>`;
+          ${m.comments.map(c => {
+            if (!c.name && !c.content) return '';
+            let inner = `<span class="name">${c.name}</span>`;
+            if (c.replyTo && c.replyTo.trim() !== '') {
+              inner += `<span class="content"> 回复 </span><span class="name">${c.replyTo}</span>`;
             }
-            
-            return `<div class="comment-item"><span class="name">${name}</span><span class="content">：${content}</span></div>`;
+            inner += `<span class="content">：${c.content}</span>`;
+            return `<div class="comment-item">${inner}</div>`;
           }).join('')}
         </div>` : '';
 
@@ -443,6 +437,7 @@
     const contactsListHtml = contacts.filter(c => c.name).map(c => `
         <div class="contact-item"><div class="contact-avatar"><img src="${c.avatar}" alt="${c.name}"></div> ${c.name}</div>`).join('');
 
+    // 生成完整的 HTML 页面代码 (与你原有的一致，省略动态渲染细节以防太长)
     const fullHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -464,6 +459,7 @@
   .tab-view.active { display: block; }
   .chat-item { display: flex; align-items: center; padding: 12px 15px; background: #ededed; border-bottom: 1px solid #e0e0e0; cursor: pointer; }
   .chat-item:active { background: #ddd; }
+  .chat-item.pinned { background: #e2e2e2; }
   .chat-avatar { width: 48px; height: 48px; border-radius: 6px; background: #ccc; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 18px; font-weight: bold; flex-shrink: 0; position: relative; overflow: hidden; }
   .chat-avatar img { width: 100%; height: 100%; border-radius: 6px; object-fit: cover; }
   .chat-info { flex: 1; overflow: hidden; }
@@ -521,7 +517,7 @@
   .moment-item { display: flex; margin-bottom: 25px; }
   .moment-avatar { width: 40px; height: 40px; border-radius: 4px; background: #07c160; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; flex-shrink: 0; overflow: hidden; }
   .moment-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .moment-content { flex: 1; }
+  .moment-content { flex: 1; min-width: 0; }
   .moment-name { color: #576b95; font-weight: 600; font-size: 15px; margin-bottom: 4px; }
   .moment-text { font-size: 15px; color: #000; margin-bottom: 8px; line-height: 1.4; }
   .moment-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 8px; }
@@ -550,25 +546,15 @@
       <div class="tab-view active" id="tab-chats">${contactListHtml}</div>
       <div class="tab-view" id="tab-contacts">${contactsListHtml}</div>
       <div class="tab-view" id="tab-discover">
-        <div class="discover-item" onclick="openMoments()">
-          <div class="discover-icon">📷</div>
-          <div class="discover-text">朋友圈</div>
-          <div class="discover-arrow">›</div>
-        </div>
+        <div class="discover-item" onclick="openMoments()"><div class="discover-icon">📷</div><div class="discover-text">朋友圈</div><div class="discover-arrow">›</div></div>
         <div class="discover-item"><div class="discover-icon">📺</div><div class="discover-text">视频号</div><div class="discover-arrow">›</div></div>
-        <div class="discover-item"><div class="discover-icon">🔍</div><div class="discover-text">扫一扫</div><div class="discover-arrow">›</div></div>
       </div>
       <div class="tab-view" id="tab-me">
         <div style="padding: 30px; text-align: center; background: #fff;">
-          <div style="width: 70px; height: 70px; border-radius: 8px; margin: 0 auto 10px; overflow: hidden;">
-            <img src="${myAvatar}" alt="${myNickname}" style="width: 100%; height: 100%; object-fit: cover;">
-          </div>
+          <div style="width: 70px; height: 70px; border-radius: 8px; margin: 0 auto 10px; overflow: hidden;"><img src="${myAvatar}" style="width: 100%; height: 100%; object-fit: cover;"></div>
           <div style="font-weight: bold; font-size: 18px;">${myNickname}</div>
           <div style="color: #888; font-size: 13px; margin-top: 5px;">微信号：${myWechatId}</div>
         </div>
-        <div class="discover-item"><div class="discover-icon">⭐</div><div class="discover-text">收藏</div><div class="discover-arrow">›</div></div>
-        <div class="discover-item"><div class="discover-icon">🖼️</div><div class="discover-text">相册</div><div class="discover-arrow">›</div></div>
-        <div class="discover-item"><div class="discover-icon">⚙️</div><div class="discover-text">设置</div><div class="discover-arrow">›</div></div>
       </div>
     </div>
     <div class="bottom-nav">
@@ -583,11 +569,11 @@
       <div class="chat-input-area"><input type="text" placeholder="输入消息..."></div>
     </div>
     <div class="moments-view" id="momentsView">
-      <div class="moments-header">
-        <div class="back-btn" onclick="closeMoments()">返回</div>
-        <div class="user-info"><span>${myNickname}</span><img src="${myAvatar}" alt="头像"></div>
+      <div class="back-btn" onclick="closeMoments()" style="position: absolute; top: 55px; left: 15px; z-index: 999; color: #fff; font-size: 16px; display: flex; align-items: center; text-shadow: 0 1px 3px #000; cursor: pointer;"><span style="font-size: 28px; margin-right: 2px; line-height: 1;">‹</span> 返回</div>
+      <div class="moments-body" style="padding: 0; padding-bottom: 80px;">
+        <div class="moments-header"><div class="user-info"><span>${myNickname}</span><img src="${myAvatar}"></div></div>
+        <div style="padding: 15px;">${momentsHtml}</div>
       </div>
-      <div class="moments-body">${momentsHtml}</div>
     </div>
   </div>
 </div>
@@ -622,34 +608,23 @@
       const avatarDiv = document.createElement('div');
       avatarDiv.className = 'msg-avatar';
       const img = document.createElement('img');
-      if (msg.type === 'right') {
-        img.src = myAvatarUrl;
-      } else if (msg.senderAvatar && msg.senderAvatar.trim() !== '') {
-        img.src = msg.senderAvatar;
-      } else {
-        img.src = data.avatar;
-      }
+      if (msg.type === 'right') { img.src = myAvatarUrl; } 
+      else if (msg.senderAvatar && msg.senderAvatar.trim() !== '') { img.src = msg.senderAvatar; } 
+      else { img.src = data.avatar; }
       avatarDiv.appendChild(img);
       
       const bubbleDiv = document.createElement('div');
       if (msg.text && msg.text.includes('<img')) {
-        bubbleDiv.className = 'msg-image ' + msg.type;
-        bubbleDiv.innerHTML = msg.text;
+        bubbleDiv.className = 'msg-image ' + msg.type; bubbleDiv.innerHTML = msg.text;
       } else {
         bubbleDiv.className = 'msg ' + msg.type;
-        if (msg.text && (msg.text.includes('<br>') || msg.text.includes('<br/>'))) {
-          bubbleDiv.innerHTML = msg.text;
-        } else {
-          bubbleDiv.innerText = msg.text;
-        }
+        if (msg.text && (msg.text.includes('<br>') || msg.text.includes('<br/>'))) { bubbleDiv.innerHTML = msg.text; } 
+        else { bubbleDiv.innerText = msg.text; }
       }
-
       if (data.isGroup && msg.type === 'left' && msg.sender) {
         const senderName = document.createElement('div');
-        senderName.className = 'msg-sender-name';
-        senderName.innerText = msg.sender;
-        const wrapper = document.createElement('div');
-        wrapper.className = 'msg-content-wrapper';
+        senderName.className = 'msg-sender-name'; senderName.innerText = msg.sender;
+        const wrapper = document.createElement('div'); wrapper.className = 'msg-content-wrapper';
         wrapper.appendChild(senderName); wrapper.appendChild(bubbleDiv);
         rowDiv.appendChild(avatarDiv); rowDiv.appendChild(wrapper);
       } else {
@@ -672,7 +647,6 @@
       btn.classList.add('liked'); btn.innerText = '❤️ 取消';
       const mySpan = document.createElement('span');
       mySpan.className = 'name liked-me'; mySpan.innerText = myNickname;
-      
       const icon = list.querySelector('.icon');
       if (icon) {
         const hasOtherNames = list.querySelectorAll('.name:not(.liked-me)').length > 0;
@@ -682,9 +656,7 @@
           sep.innerText = '、'; sep.className = 'liked-me-sep';
           list.insertBefore(sep, mySpan.nextSibling);
         }
-      } else {
-        list.appendChild(mySpan);
-      }
+      } else { list.appendChild(mySpan); }
     } else {
       btn.classList.remove('liked'); btn.innerText = '❤️ 赞';
       const mySpan = list.querySelector('.liked-me');
@@ -713,7 +685,6 @@
     a.href = url; a.download = 'my-wechat.html'; a.click();
     URL.revokeObjectURL(url);
   }
-
   function copyCode() {
     const code = document.getElementById('outputCode');
     code.select(); document.execCommand('copy');
