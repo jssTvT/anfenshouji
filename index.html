@@ -2,17 +2,65 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>选择手机</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沉浸式捡手机 - 请选择</title>
 <style>
-  body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; margin: 0; gap: 20px; color: #fff; flex-direction: column;}
-  h1 { margin-bottom: 30px; }
-  a { display: block; width: 200px; padding: 15px; text-align: center; background: #07c160; color: #fff; text-decoration: none; border-radius: 10px; font-size: 18px; font-weight: bold; margin-bottom: 15px;}
-  a.fang { background: #3498db; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { 
+    background: #1a1a1a; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  h1 { 
+    color: #fff; 
+    font-size: 24px; 
+    margin-bottom: 40px; 
+    letter-spacing: 2px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  a { 
+    display: block; 
+    width: 260px; 
+    padding: 16px; 
+    text-align: center; 
+    background: #07c160; 
+    color: #fff; 
+    text-decoration: none; 
+    border-radius: 12px; 
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(7, 193, 96, 0.3);
+    transition: all 0.2s ease;
+  }
+  a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(7, 193, 96, 0.5);
+    opacity: 0.9;
+  }
+  a.fang { 
+    background: #3498db; 
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+  }
+  a.fang:hover {
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.5);
+  }
 </style>
 </head>
 <body>
   <h1>请选择要查看的手机</h1>
-  <a href="dai.html">进入“戴”的手机</a>
-  <a href="fang.html" class="fang">进入“方”的手机</a>
+  
+  <div class="btn-group">
+    <a href="dai.html">📱 捡到了小戴的手机 - 1 (选课风波)</a>
+    <a href="dai2.html" class="fang">📱 捡到了小戴的手机 - 2 (足球风云)</a>
+  </div>
 </body>
 </html>
