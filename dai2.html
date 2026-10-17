@@ -82,7 +82,8 @@
   .moment-item { display: flex; margin-bottom: 25px; }
   .moment-avatar { width: 40px; height: 40px; border-radius: 4px; background: #07c160; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-weight: bold; flex-shrink: 0; overflow: hidden; }
   .moment-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .moment-content { flex: 1; }
+  .moment-content { flex: 1; ; 
+    min-width: 0;}
   .moment-name { color: #576b95; font-weight: 600; font-size: 15px; margin-bottom: 4px; }
   .moment-text { font-size: 15px; color: #000; margin-bottom: 8px; line-height: 1.4; }
   .moment-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 8px; }
@@ -90,8 +91,8 @@
    /* 单张长图专用样式 */
   .moment-image-single { margin-bottom: 8px; max-width: 100%; }
   .moment-image-single img { 
-    max-width: 100%; 
-    height: auto; /* 关键：高度根据图片原本的比例自适应，不再写死100px */
+    max-width: 70%; 
+    height: auto; 
     border-radius: 4px; 
     display: block; 
   }
