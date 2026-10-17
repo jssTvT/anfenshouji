@@ -19,6 +19,12 @@
   .tab-view.active { display: block; }
   .chat-item { display: flex; align-items: center; padding: 12px 15px; background: #ededed; border-bottom: 1px solid #e0e0e0; cursor: pointer; }
   .chat-item:active { background: #ddd; }
+   .chat-item { display: flex; align-items: center; padding: 12px 15px; background: #ededed; border-bottom: 1px solid #e0e0e0; cursor: pointer; }
+  .chat-item:active { background: #ddd; }
+  
+  /* 👇 新增置顶样式：背景颜色稍微加深一点 */
+  .chat-item.pinned { background: #e2e2e2; } 
+  .chat-item.pinned:active { background: #d2d2d2; } /* 点下去的时候颜色更深一点 */
   .chat-avatar { width: 48px; height: 48px; border-radius: 6px; background: #ccc; margin-right: 12px; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 18px; font-weight: bold; flex-shrink: 0; position: relative; overflow: hidden; }
   .chat-avatar img { width: 100%; height: 100%; border-radius: 6px; object-fit: cover; }
   .chat-info { flex: 1; overflow: hidden; }
@@ -81,6 +87,14 @@
   .moment-text { font-size: 15px; color: #000; margin-bottom: 8px; line-height: 1.4; }
   .moment-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 8px; }
   .moment-images img { width: 100%; height: 100px; object-fit: cover; border-radius: 4px; }
+   /* 单张长图专用样式 */
+  .moment-image-single { margin-bottom: 8px; max-width: 100%; }
+  .moment-image-single img { 
+    max-width: 100%; 
+    height: auto; /* 关键：高度根据图片原本的比例自适应，不再写死100px */
+    border-radius: 4px; 
+    display: block; 
+  }
   .moment-footer { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #888; }
   .moment-like-btn { cursor: pointer; color: #576b95; }
   .moments-interaction { background: #f7f7f7; border-radius: 4px; padding: 8px 10px; margin-top: 8px; font-size: 13px; position: relative; }
@@ -278,7 +292,7 @@
           <div class="moment-content">
             <div class="moment-name">方士谦</div>
             <div class="moment-text">到底闹够没闹够</div>
-            <div class="moment-images">
+            <div class="moment-images-single">
               <img src="images/shixi.jpg" alt="">
             </div>
             <div class="moment-footer">
@@ -305,7 +319,7 @@
           <div class="moment-content">
             <div class="moment-name">王杰希</div>
             <div class="moment-text">何时葡萄先熟透</div>
-            <div class="moment-images">
+            <div class="moment-images-single">
               <img src="images/ptcss.jpg" alt="">
             </div>
             <div class="moment-footer">
@@ -376,7 +390,7 @@
 
         <!-- 动态 8 -->
         <div class="moment-item">
-          <div class="moment-avatar"><img src="" alt="郑轩"></div>
+          <div class="moment-avatar"><img src="images/zhengxuan.jpg" alt="郑轩"></div>
           <div class="moment-content">
             <div class="moment-name">郑轩</div>
             <div class="moment-text">🦙</div>
