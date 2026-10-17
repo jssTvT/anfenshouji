@@ -401,13 +401,22 @@
       
       const likesHtml = m.likes ? `<div class="like-list"><span class="icon">❤️</span>${m.likes.split(/[、,，]/).filter(Boolean).map(n => `<span class="name">${n}</span>`).join('、')}</div>` : `<div class="like-list"><span class="icon">❤️</span></div>`;
       
-      const commentsHtml = m.comments ? `
+           const commentsHtml = m.comments ? `
         <div class="comment-list">
           ${m.comments.split(';').filter(Boolean).map(c => {
             const parts = c.split(':');
             if (parts.length < 2) return '';
             const name = parts[0];
-            const content = parts.slice(1).join(':');
+            let content = parts.slice(1).join(':');
+            
+            // 核心升级：自动识别“回复”格式
+            const replyMatch = content.match(/^\s*回复\s+(.*?)[：:](.*)$/);
+            if (replyMatch) {
+              const replyName = replyMatch[1]; // 被回复的人
+              const replyContent = replyMatch[2]; // 真正的内容
+              return `<div class="comment-item"><span class="name">${name}</span><span class="content"> 回复 </span><span class="name">${replyName}</span><span class="content">：${replyContent}</span></div>`;
+            }
+            
             return `<div class="comment-item"><span class="name">${name}</span><span class="content">：${content}</span></div>`;
           }).join('')}
         </div>` : '';
